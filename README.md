@@ -12,6 +12,7 @@
   - nodemon
   
   If you don't have npm and nodejs installed, open a terminal and type the following commands: 
+  
   --------- Install Node
   sudo apt-get update
   sudo apt-get install nodejs
