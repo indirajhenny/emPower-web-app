@@ -1,0 +1,5 @@
+# No modules
+node_modules
+
+# no ds_store
+.DS_Store 
