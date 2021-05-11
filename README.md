@@ -1,5 +1,10 @@
 # emPower-web-app 
 
+## To download repo locally
+
+1. Open a bash terminal and cd into a folder directory of your choice
+2. Clone the repository by typing: "git clone [emPower-web-app URL]"
+
 ## To Build Project
 
 1. Open **emPower-web-app** project folder in a bash terminal.
