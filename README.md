@@ -1,37 +1,15 @@
 # emPower-web-app 
 
-## To Build Project (in progress)
-1. Make sure you have the following installed
-  - npm
-  - nodejs
-  - mongoose
-  - express
-  - axios
-  - morgan
-  - concurrently
-  - nodemon
-  
-  If you don't have npm and nodejs installed, open a terminal and type the following commands: 
-  
-  --------- Install Node
-  
-  sudo apt-get update
-  sudo apt-get install nodejs
-  sudo apt-get install npm
+## To Build Project
 
-  --------- update node
-  
-  sudo npm cache clean -f
-  sudo npm install -g n
-  sudo n stable
-  
-  If you don't have mongoos, express, axios, morgan, or concurrently installed, open a terminal, 'cd' into the "empower-web-app/client" directory and type the following command:
-  
-  
-  
-  If you don't have nodemon installed, open a terminal (any directory) and type the following command:
-  
-  npm install -g nodemon
+1. Open **emPower-web-app** project folder in a bash terminal.
+2. cd into **/client** folder and run the following command: **"npm install"**. This will install the npm package manager and all required dependencies to run a react project. 
+3. cd back into **emPower-web-app** project folder and run the following command: **"npm mongoose express axios morgan concurrently -S"**. This will install 5 main dependencies that will help us build our back-end server, API endpoints, database connections, etc. 
+4. You are now done with installing stuff! To run the react web app locally, make sure you are in the **emPower-web-app** project folder and type the following into the terminal: **"npm run dev"**. This will automatically open the react emPower web app on an available internet browser.
+
+### Additional but not Necessary
+
+If you don't have nodemon installed, open a terminal (any directory) and type the following command: npm install -g nodemon
   
   
 
