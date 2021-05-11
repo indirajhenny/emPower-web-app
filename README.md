@@ -3,7 +3,7 @@
 ## To download repo locally
 
 1. Open a bash terminal and cd into a folder directory of your choice
-2. Clone the repository by typing: "git clone [https://github.com/indirajhenny/emPower-web-app.git]"
+2. Clone the repository by typing: "git clone https://github.com/indirajhenny/emPower-web-app.git"
 
 ## To Build Project
 
