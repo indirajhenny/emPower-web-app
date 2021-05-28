@@ -1,5 +1,25 @@
 import React from 'react';
 import axios from 'axios';
+import {
+  BrowserRouter,
+  Switch,
+  Route,
+  NavLink
+} from 'react-router-dom';
+
+
+import Home from './components/Home';
+import Games from './components/Games';
+import Resources from './components/Resources';
+import Login from './components/Login';
+import Navigation from './components/Navigation';
+import Footer from './components/Footer';
+import Forum from './components/Forum';
+import Register from './components/Register';
+
+import './App.css';
+
+// import 'bootstrap/dist/css/bootstrap/min.css';
 
 class App extends React.Component {
 
@@ -101,8 +121,26 @@ class App extends React.Component {
     console.log('State: ', this.state);
     // JSX
     return(
+
+      // Navigation bar
+      <>      
+       <BrowserRouter>
+        <div>
+          <Navigation />
+            <Switch>
+             <Route path="/" component={Home} exact/>
+             <Route path="/Games" component={Games}/>
+             <Route path="/Resources" component={Resources}/>
+             <Route path="/Login" component={Login}/>
+             <Route path="/Forum" component={Forum}/>
+             <Route path="/Register" component={Register}/>
+            <Route component={Error}/>
+           </Switch>
+        </div> 
+      </BrowserRouter>
+
       <div>
-        <h2>Upload Game</h2>
+        <h2>Upload Game:</h2>
         <form onSubmit={this.submit}>
           <div className="form-input">
             <input
@@ -131,8 +169,13 @@ class App extends React.Component {
           {this.displayGameCards(this.state.games)}
         </div>
       </div>
-    );
-  }
+
+      <Footer />
+      </>   
+      
+      
+    );   
+    }
 }
 
 export default App;
