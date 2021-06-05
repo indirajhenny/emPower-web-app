@@ -16,6 +16,7 @@ import Navigation from './components/Navigation';
 import Footer from './components/Footer';
 import Forum from './components/Forum';
 import Register from './components/Register';
+import Articles from './components/Articles';
 
 import './App.css';
 
@@ -134,6 +135,7 @@ class App extends React.Component {
              <Route path="/Login" component={Login}/>
              <Route path="/Forum" component={Forum}/>
              <Route path="/Register" component={Register}/>
+             <Route path="/Articles" component={Articles}/>
             <Route component={Error}/>
            </Switch>
         </div> 
