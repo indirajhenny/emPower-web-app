@@ -1,8 +1,14 @@
+// start up server file
 // import npm packages
 const express = require('express');
 const mongoose = require('mongoose');
 const morgan = require('morgan')
 const path = require('path');
+const dotenv = require('dotenv');
+const cookieParser = require('cookie-parser');
+
+// reads local .env file for "hidden" process variables
+dotenv.config();
 
 // init express app
 const app = express();
@@ -10,15 +16,18 @@ const app = express();
 const PORT = process.env.PORT || 8080;
 
 // bring route inside server to make/receive requests
-const routes = require('./routes/api');
+// change this to "./routes/forumRouter"
+//const routes = require('./routes/api');
 
-// mongodb cluster connection string -> hide this in future
-const MONGODB_URI = 'mongodb+srv://dbAdmin1:admin2021@empowerdb.jxipn.mongodb.net/empowerDatabase?retryWrites=true&w=majority'
+// connect to mongoDB
 
-// STEP 2: connect to MONGODB/mongoose w/ parameters is
+// mongodb cluster connection string -> delete after deploying in heroku
+const MONGODB_URI = process.env.MDB_CONNECT
+
+// STEP 2: connect to mongoDB w/ parameters is
 // length of connection and options you can pass
 // to mongodb
-mongoose.connect(process.env.MONGODB_URI || MONGODB_URI, {
+mongoose.connect(process.env.MDB_CONNECT || MONGODB_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true
 });
@@ -30,7 +39,9 @@ mongoose.connection.on('connected', () => {
 
 // parses every json or url data coming in; makes all
 // requests coming in available to requests called in routes
+// populates req.body in endpoints
 app.use(express.json());
+app.use(cookieParser());
 // extended determines how deep we want to go into object
 // if the object is not very deep/nested, keep extended at false
 app.use(express.urlencoded({ extended: false }));
@@ -39,8 +50,13 @@ app.use(express.urlencoded({ extended: false }));
 app.use(morgan('tiny'));
 
 // instead of '/', we could use '/api' if we decide
-// configure router
-app.use('/', routes);
+// set up routes
+
+// change this to "./routes/forumRouter"
+app.use('/', require('./routes/api'));
+app.use('/auth', require('./routes/userRouter'));
+app.use('/researcher', require('./routes/researcherRouter'));
+
 
 // STEP 3: Create Custom variable inside heroku to confirm
 // app is on heroku

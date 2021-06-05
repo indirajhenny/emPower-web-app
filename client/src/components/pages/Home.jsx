@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import Carousel from 'react-bootstrap/Carousel';
 import Nav from 'react-bootstrap/Nav';
 
-import labyrinth from "../assets/images/labyrinth.webp";
-import twine from "../assets/images/twine.png";
-import Resources from "../assets/images/Resources.png";
+import labyrinth from "../../assets/images/labyrinth.webp";
+import twine from "../../assets/images/twine.png";
+import Resources from "../../assets/images/Resources.png";
 
 
 class Home extends Component {
@@ -19,7 +19,7 @@ class Home extends Component {
                <p>Download Analilia</p>
               </Carousel.Caption>
           </Carousel.Item>
-  
+
           <Carousel.Item interval={10000}>
             <img className="d-block w-100" src={twine} style={{'height':700}} alt="Second slide"/>
               <Carousel.Caption>
@@ -27,7 +27,7 @@ class Home extends Component {
                <p>Play the Twine Game.</p>
               </Carousel.Caption>
           </Carousel.Item>
-  
+
           <Carousel.Item interval={10000}>
             <img className="d-block w-100" src={Resources} style={{'height':700}} alt="Third slide"/>
               <Carousel.Caption>
