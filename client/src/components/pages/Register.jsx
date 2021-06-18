@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
+import axios from 'axios';
 //import FormControl from 'react-bootstrap/FormControl';
 
 function Register() {
@@ -22,6 +23,11 @@ function Register() {
         passwordVerify
       }
       console.log(registerData);
+      // makes http request call
+      // make a POST request to send data to server
+      // replace local host with future heroku host URL
+      await axios.post("http://localhost:8080/auth/", registerData);
+
     } catch(err) {
       console.error(err);
     }

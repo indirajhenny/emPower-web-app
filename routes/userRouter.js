@@ -113,5 +113,30 @@ router.get("/logout", (req, res) => {
   }).send();
 });
 
+//const jwt = require("jsonwebtoken");
+
+// allows us to check if we are logged in by sending the token to server to check
+router.get("/loggedIn", (req, res) => {
+  try {
+    // grab cookie token
+    const token = req.cookies.token;
+
+    // check if there is a token/a cookie with a token has been sent
+    if (!token) {
+      // not auth
+      return res.json(false);
+    }
+    // validate token to ensure token has been created with secret key
+    jwt.verify(token, process.env.JWT_SECRET);
+    res.send(true);
+
+  } catch(err) {
+    res.json(false);
+  }
+})
+
+
+
+
 
 module.exports = router;
