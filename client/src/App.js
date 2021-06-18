@@ -1,5 +1,5 @@
 import React from 'react';
-//import axios from 'axios';
+
 import {
   BrowserRouter,
   Switch,
@@ -15,10 +15,13 @@ import Navigation from './components/layout/Navigation';
 import Footer from './components/layout/Footer';
 import Forum from './components/pages/Forum';
 import Register from './components/pages/Register';
+import axios from 'axios';
+import { AuthContextProvider } from "./components/context/AuthContext";
 
 import './App.css';
 
 // import 'bootstrap/dist/css/bootstrap/min.css';
+axios.defaults.withCredentials = true;
 
 class App extends React.Component {
 
@@ -27,7 +30,7 @@ class App extends React.Component {
     return(
 
       // Navigation bar
-      <>
+      <AuthContextProvider>
        <BrowserRouter>
         <div>
           <Navigation />
@@ -44,7 +47,7 @@ class App extends React.Component {
       </BrowserRouter>
 
       <Footer />
-      </>
+      </AuthContextProvider>
 
 
     );

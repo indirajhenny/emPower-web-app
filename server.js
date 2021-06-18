@@ -6,6 +6,7 @@ const morgan = require('morgan')
 const path = require('path');
 const dotenv = require('dotenv');
 const cookieParser = require('cookie-parser');
+const cors = require('cors');
 
 // reads local .env file for "hidden" process variables
 dotenv.config();
@@ -41,7 +42,7 @@ mongoose.connection.on('connected', () => {
 // requests coming in available to requests called in routes
 // populates req.body in endpoints
 app.use(express.json());
-app.use(cookieParser());
+
 // extended determines how deep we want to go into object
 // if the object is not very deep/nested, keep extended at false
 app.use(express.urlencoded({ extended: false }));
@@ -49,11 +50,19 @@ app.use(express.urlencoded({ extended: false }));
 // HTTP request logger
 app.use(morgan('tiny'));
 
+app.use(cookieParser());
+app.use(cors({
+  // array of accepted front-end origins that are accepted
+  // ** TODO: when app is deployed, replace with name of deployed app
+  origin: ["http://localhost:3000"],
+  // allows axios to set credentials
+  credentials: true // allow browser to set the cookie w/ account info
+}));
+
 // instead of '/', we could use '/api' if we decide
 // set up routes
-
 // change this to "./routes/forumRouter"
-app.use('/', require('./routes/api'));
+app.use('/api', require('./routes/forumRouter'));
 app.use('/auth', require('./routes/userRouter'));
 app.use('/researcher', require('./routes/researcherRouter'));
 

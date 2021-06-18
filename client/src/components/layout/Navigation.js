@@ -1,5 +1,5 @@
-import React from 'react';
- 
+import React, { useContext } from 'react';
+
 import { NavLink } from 'react-router-dom';
 
 import Navbar from 'react-bootstrap/Navbar';
@@ -9,14 +9,19 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import FormControl from 'react-bootstrap/FormControl';
 import InputGroup from 'react-bootstrap/InputGroup';
+//import AuthContext from "../components/context/AuthContext";
 
 //import './Navigation.css';
 
 const Navigation = () => {
+
+    // get logged in state value
+    //const loggedIn = useContext(AuthContext);
+
     return (
 
        <div className = "Navigation">
-      
+
 
          <Navbar bg="dark" variant="dark" expand="lg">
          <Navbar.Brand href="/">emPower Through Play</Navbar.Brand>
@@ -41,5 +46,5 @@ const Navigation = () => {
          </div>
     );
 }
- 
+
 export default Navigation;

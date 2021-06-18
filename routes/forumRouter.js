@@ -5,7 +5,7 @@ const GameUpload = require('../models/gameUpload');
 
 // Routes - define routes inside server that determines
 //  what is sent to and received by the client
-router.get('/api/info', (req, res) => {
+router.get('/info', (req, res) => {
   // hard-coded JSON data for now sent to the client
   // use model to insert data into db
   GameUpload.find({ })
@@ -24,7 +24,7 @@ router.get('/api/info', (req, res) => {
 // create POST request - route tells react app this is where
 // data needs to be sent to server/outside application (db)
 // handles data coming in from the client/browser
-router.post('/api/save', (req, res) => {
+router.post('/save', (req, res) => {
   // body is the entirety of the data, this identifier cannot change
   console.log('Body: ', req.body);
   // save body data into db
