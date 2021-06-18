@@ -1,12 +1,67 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
+import Form from 'react-bootstrap/Form';
+import Button from 'react-bootstrap/Button';
+import Container from 'react-bootstrap/Container';
+import axios from 'axios';
+//import FormControl from 'react-bootstrap/FormControl';
 
-class Login extends Component {
-  render() {
-    return (
-      <div className="Login">
-        This is the Login page.
-      </div>
-    )
+function Login() {
+
+  // set state that contains value of form inputs
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  async function login(e) {
+    e.preventDefault();
+
+    try {
+      //console.log();
+      const loginData = {
+        email,
+        password,
+      }
+      // makes http request call
+      // make a POST request to send data to server
+      // replace local host with future heroku host URL
+      await axios.post("http://localhost:8080/auth/login", loginData);
+
+    } catch(err) {
+      console.error(err);
+    }
   }
+  return (
+    <div className="Login">
+    <Container>
+      <Form onSubmit={login}>
+        <Form.Group controlId="formBasicEmail">
+          <Form.Label>Email address</Form.Label>
+          <Form.Control
+            type="email"
+            placeholder="Enter email"
+            onChange={(e) => setEmail(e.target.value)}
+            value={email}
+          />
+          <Form.Text className="text-muted">
+            We'll never share your email with anyone else.
+          </Form.Text>
+        </Form.Group>
+
+        <Form.Group controlId="formBasicPassword">
+          <Form.Label>Password</Form.Label>
+          <Form.Control
+            type="password"
+            placeholder="Password"
+            onChange={(e) => setPassword(e.target.value)}
+            value={password}
+          />
+        </Form.Group>
+
+        <Button variant="primary" type="submit">
+          Log In
+        </Button>
+        </Form>
+    </Container>
+    </div>
+  )
 }
 export default Login;
