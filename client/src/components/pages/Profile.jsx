@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Logout from './Logout';
+import Logout from './auth/Logout';
 
 
 class Profile extends Component {

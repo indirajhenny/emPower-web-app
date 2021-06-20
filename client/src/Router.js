@@ -10,10 +10,10 @@ import {
 import Home from './components/pages/Home';
 import Games from './components/pages/Games';
 import Resources from './components/pages/Resources';
-import Login from './components/pages/Login';
+import Login from './components/pages/auth/Login';
 import Navigation from './components/layout/Navigation';
 import Forum from './components/pages/Forum';
-import Register from './components/pages/Register';
+import Register from './components/pages/auth/Register';
 import Profile from './components/pages/Profile';
 import AuthContext from "./components/context/AuthContext";
 

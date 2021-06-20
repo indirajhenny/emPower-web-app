@@ -3,7 +3,7 @@ import React, { useContext } from 'react';
 import { useHistory} from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
 import axios from 'axios';
-import AuthContext from '../context/AuthContext';
+import AuthContext from '../../context/AuthContext';
 
 function Logout() {
   // send cookie back to server to detect new updated state
