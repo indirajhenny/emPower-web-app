@@ -1,7 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
+import AuthContext from '../context/AuthContext';
+import { useHistory} from 'react-router-dom';
+
+
 import axios from 'axios';
 //import FormControl from 'react-bootstrap/FormControl';
 
@@ -10,6 +14,9 @@ function Login() {
   // set state that contains value of form inputs
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  const {getLoggedIn} = useContext(AuthContext);
+  const history = useHistory();
 
   async function login(e) {
     e.preventDefault();
@@ -24,7 +31,9 @@ function Login() {
       // make a POST request to send data to server
       // replace local host with future heroku host URL
       await axios.post("http://localhost:8080/auth/login", loginData);
-
+      // updates logged in state
+      await getLoggedIn();
+      history.push("/");
     } catch(err) {
       console.error(err);
     }

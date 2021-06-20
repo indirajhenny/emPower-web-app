@@ -1,6 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 
+// might need to change to function type instead of class
 class ForumSample extends React.Component {
 
   // set state that contains value of form inputs
