@@ -9,14 +9,16 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import FormControl from 'react-bootstrap/FormControl';
 import InputGroup from 'react-bootstrap/InputGroup';
-//import AuthContext from "../components/context/AuthContext";
+import AuthContext from '../context/AuthContext';
 
 //import './Navigation.css';
 
 const Navigation = () => {
 
-    // get logged in state value
-    //const loggedIn = useContext(AuthContext);
+    // get logged in state value as boolean T/F
+    const {loggedIn} = useContext(AuthContext);
+    console.log(loggedIn);
+    // with loggedIn we can now use conditional rendering
 
     return (
 
@@ -32,8 +34,17 @@ const Navigation = () => {
             <Nav.Link href="/Resources">Resources</Nav.Link>
             <Nav.Link href="/Forum">Forum</Nav.Link>
             <NavDropdown title="Account" id="basic-nav-dropdown">
-               <NavDropdown.Item href="/Login">Login</NavDropdown.Item>
-               <NavDropdown.Item href="/Register">Register</NavDropdown.Item>
+               {loggedIn === false && (
+                 <>
+                   <NavDropdown.Item href="/Login">Login</NavDropdown.Item>
+                   <NavDropdown.Item href="/Register">Register</NavDropdown.Item>
+                 </>
+               )}
+               {loggedIn === true && (
+                 <>
+                   <NavDropdown.Item href="/Profile">Profile</NavDropdown.Item>
+                 </>
+               )}
             </NavDropdown>
          </Nav>
          <Form inline>
