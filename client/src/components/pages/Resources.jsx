@@ -47,7 +47,7 @@ function AddResourceModal(props){
           <Col sm="8">
           <Form.Control type="text"/>
           </Col>
-          </Form.Group>       
+          </Form.Group>
 
           <Form.Group as={Row} controlId="exampleForm.ControlSelect">
           <Form.Label column sm="3">Topic</Form.Label>
@@ -102,10 +102,12 @@ function AddResourceButton() {
   <AddResourceModal show={modalShow} onHide={() => setModalShow(false)}/>
 
   </>
-  
+
   );
 }
 
+// change to function in order to
+// access loggedIn state
 class Resources extends Component {
 // Displaying Resources with the backend(IP)
   state = {
@@ -125,8 +127,8 @@ class Resources extends Component {
     axios.get('/api/info')
   }
 
-
   render() {    
+
 
     // Bootstrap components for headers, cards and topic sidebar
     return (
@@ -145,6 +147,7 @@ class Resources extends Component {
           <AddResourceButton/>
           </Col>
           </Row>
+
         </Container>        
 
           <br></br><br></br>
@@ -175,7 +178,7 @@ class Resources extends Component {
                     </Card.Body>
                     <Card.Footer><small className="text-muted">Date Added</small></Card.Footer>
                   </Card>
-                  
+
                   <br></br>
 
                   <Card>
@@ -188,7 +191,7 @@ class Resources extends Component {
                       <Button variant="primary" href="https://www.yourarticlelibrary.com/business-management/4-different-types-of-leadership-styles/2550">View</Button>
                     </Card.Body>
                   <Card.Footer><small className="text-muted">June 16, 2021</small></Card.Footer>
-                  </Card>                  
+                  </Card>
 
               </Col>
             </Row>
