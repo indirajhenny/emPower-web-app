@@ -17,6 +17,7 @@ router.post("/", async(req, res) => {
       .json({errorMessage: "Please enter all required fields."});
     }
     if (password.length < 6) {
+      //console.log("Please enter a password of at least 6 characters.");
       return res.status(400)
       .json({errorMessage: "Please enter a password of at least 6 characters."});
     }
