@@ -5,9 +5,7 @@ import Container from 'react-bootstrap/Container';
 import axios from 'axios';
 import AuthContext from '../../context/AuthContext';
 import { useHistory} from 'react-router-dom';
-
-
-//import FormControl from 'react-bootstrap/FormControl';
+//import Modal from 'react-bootstrap/Modal';
 
 function Register() {
 
@@ -18,6 +16,11 @@ function Register() {
 
   const {getLoggedIn} = useContext(AuthContext);
   const history = useHistory();
+  //const {loggedIn} = useContext(AuthContext);
+
+  /*const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);*/
 
   async function register(e) {
     e.preventDefault();
@@ -35,15 +38,18 @@ function Register() {
       // replace local host with future heroku host URL
       await axios.post("http://localhost:8080/auth/", registerData);
       await getLoggedIn();
+      // Pop-up Model confirming successful registration TBD
       history.push("/");
     } catch(err) {
       console.error(err);
     }
   }
+
   return (
     <div className="Register">
     <Container>
-      <Form onSubmit={register}>
+      {/*<Form onSubmit={register}>*/}
+      <Form >
         <Form.Group controlId="formBasicEmail">
           <Form.Label>Email address</Form.Label>
           <Form.Control
@@ -76,11 +82,13 @@ function Register() {
             value={passwordVerify}
           />
         </Form.Group>
-
-        <Button variant="primary" type="submit">
+        {/*<Button variant="primary" type="submit"*/}
+        <Button variant="primary" onClick={register}>
           Submit
         </Button>
         </Form>
+        {/*get variable that sets trigger variable to true
+          aka set a conditional trigger*/}
     </Container>
     </div>
   )

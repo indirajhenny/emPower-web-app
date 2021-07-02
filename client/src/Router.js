@@ -31,10 +31,12 @@ function Router() {
             <Route path="/Games" component={Games}/>
             <Route path="/Resources" component={Resources}/>
             <Route path="/Forum" component={Forum}/>
+            {/*<Route path="/Register" component={Register}/>*/}
             {loggedIn === false && (
               <>
                 <Route path="/Login" component={Login}/>
                 <Route path="/Register" component={Register}/>
+
               </>
             )}
             {loggedIn === true && (

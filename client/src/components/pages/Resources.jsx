@@ -45,7 +45,7 @@ function AddResourceModal(props){
           <Col sm="8">
           <Form.Control type="text"/>
           </Col>
-          </Form.Group>       
+          </Form.Group>
 
           <Form.Group as={Row} controlId="exampleForm.ControlSelect">
           <Form.Label column sm="3">Topic</Form.Label>
@@ -98,14 +98,16 @@ function AddResourceButton() {
   <AddResourceModal show={modalShow} onHide={() => setModalShow(false)}/>
 
   </>
-  
+
   );
 }
 
+// change to function in order to
+// access loggedIn state
 class Resources extends Component {
   render() {
 
-    
+
 
     return (
       <div className="Resources">
@@ -121,7 +123,7 @@ class Resources extends Component {
           </Col>
           </Row>
         </Container>
-        
+
             <Col>
             <Nav defaultActiveKey="/home" className="flex-column">
               <Nav.Link>Topic 1</Nav.Link>
@@ -147,7 +149,7 @@ class Resources extends Component {
                     </Card.Body>
                     <Card.Footer><small className="text-muted">Date Added</small></Card.Footer>
                   </Card>
-                  
+
                   <br></br>
 
                   <Card>
@@ -160,7 +162,7 @@ class Resources extends Component {
                       <Button variant="primary" href="https://www.yourarticlelibrary.com/business-management/4-different-types-of-leadership-styles/2550">View</Button>
                     </Card.Body>
                   <Card.Footer><small className="text-muted">June 16, 2021</small></Card.Footer>
-                  </Card>                  
+                  </Card>
 
               </Col>
             </Row>
