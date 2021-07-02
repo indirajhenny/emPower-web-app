@@ -9,7 +9,9 @@ import Col from 'react-bootstrap/Col';
 import Nav from 'react-bootstrap/Nav';
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
+import axios from 'axios';
 
+// Function for Add Resource button Modal
 function AddResourceModal(props){
   return(
     <Modal
@@ -86,10 +88,12 @@ function AddResourceModal(props){
   )
 }
 
+// Displays the button and displays the modal when clicked
 function AddResourceButton() {
-
+  // Modal originally set to false 
   const [modalShow, setModalShow] = React.useState(false);
 
+  // Displays on click
   return(
   <>
 
@@ -105,39 +109,64 @@ function AddResourceButton() {
 // change to function in order to
 // access loggedIn state
 class Resources extends Component {
-  render() {
+// Displaying Resources with the backend(IP)
+  state = {
+    title: '',
+    description: '',
+    link: '',
+    topic: '',
+    type: '',
+    resources: []
+  }
+
+  componentDidMount = () => {
+    this.getResourceInfo();
+  }
+
+  getResourceInfo = () => {
+    axios.get('/api/info')
+  }
+
+  render() {    
 
 
-
+    // Bootstrap components for headers, cards and topic sidebar
     return (
       <div className="Resources">
         <br></br>
 
         <Container>
           <Row classname="justify-content-md-center">
-          <Col xs lg="8">
+          <Col xs lg="10">
         <h1>Resources</h1>
-        <h2>Description of resource page</h2>
+        <h2>Description of resource page...</h2>     
+          </Col>
 
+          <Col>
+          <br></br><br></br>
           <AddResourceButton/>
           </Col>
           </Row>
-        </Container>
+
+        </Container>        
+
+          <br></br><br></br>
+
+          <Container>
+            <Row className="justify-content-md-center">
 
             <Col>
             <Nav defaultActiveKey="/home" className="flex-column">
               <Nav.Link>Topic 1</Nav.Link>
               <Nav.Link>Topic 2</Nav.Link>
               <Nav.Link>Topic 3</Nav.Link>
+              <Nav.Link>Topic 4</Nav.Link>
+              <Nav.Link>Other</Nav.Link>
             </Nav>
             </Col>
 
-
-
-          <Container>
-            <Row className="justify-content-md-center">
               <Col xs lg="8">
-
+                  
                   <Card>
                     <Card.Header as="h5"><small>Type of Resource</small></Card.Header>
                     <Card.Body>
