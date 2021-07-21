@@ -1,57 +1,58 @@
-import React from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
+import AuthContext from '../context/AuthContext';
 
-// might need to change to function type instead of class
-class ForumSample extends React.Component {
+function ForumSample() {
 
   // set state that contains value of form inputs
-  state = {
-    title: '',
-    description: '',
-    games: []
-  }
+  const [title, setTitle] = useState('');
+  const [description, setDescription] = useState('');
+  const [games, setGames] = useState([]);
+
+  const {loggedIn} = useContext(AuthContext);
+  console.log(loggedIn);
 
   // get entire gameInfo data when react page mounts
-  componentDidMount = () => {
-    this.getGameInfo();
-  }
+  useEffect(() => {
+    getGameInfo();
+    // notice the [] below: this prevents a constant trigger
+    // whenever a component is updated, we only need a trigger once
+  }, [])
 
   // gets latest uploadedGame info data from server/DB
-  getGameInfo = () => {
+  const getGameInfo = () => {
     axios.get('/api/info')
       // pass promise here
       .then((response) => {
         // get data and set games state to data received from DB
         const data = response.data;
-        this.setState({ games: data });
+        setGames(data);
         console.log('Data has been received!');
       })
       .catch(() => {
         console.log('Error retrieving data!');
       })
   }
-
   // everytime the user is typing into test inputs
   // update state values. handleChange function does this
   // event is coming in, get target from event
-  handleChange = ({target}) => {
-    // get value of current element firing in event
-    // from target we can get what we need
-    const { name, value } = target;
-    // use values to update state
-    this.setState({
-      [name]: value
-    });
-  };
+  const handleTitleInput = e => {
+    setTitle(e.target.value );
+  }
+  const handleDescriptionInput = e => {
+    setDescription(e.target.value );
+  }
+
   // take data input and submitted in form and send to database
-  submit = (event) => {
+  const submit = (event) => {
     // stops browser from refreshing
     event.preventDefault();
 
     // create and format data to be sent to server
     const payload = {
-      title: this.state.title,
-      description: this.state.description
+      title: title, // get current value of useState
+      description: description,
+      approved: false
     };
 
     // makes http request call
@@ -67,30 +68,29 @@ class ForumSample extends React.Component {
     })
       .then(() => {
         console.log('Data has been sent to the server');
-        this.resetUserInputs();
+        resetUserInputs();
         // after form is submitted, this gets the latest data from
         // the database
-        this.getGameInfo();
+        getGameInfo();
       })
       .catch(() => {
         console.log('Internal server error');
       });
 
   };
-
-  resetUserInputs = () => {
-    this.setState({
-      title: '',
-      description: ''
-    })
+  // when user submits form, resets text input boxes to
+  // be empty/blank
+  const resetUserInputs = () => {
+    setTitle('');
+    setDescription('');
   }
   // contains games coming in/being received
-  displayGameCards = (games) => {
+  const displayGameCards = (gamesList) => {
     // if empty return
-    if (!games.length) return null;
+    if (!gamesList.length) return null;
     // else loop through every game
     // always need index when looping through element
-    return games.map((game, index) => (
+    return gamesList.map((game, index) => (
       <div key={index}>
         <h3>{game.title}</h3>
         <p>{game.description}</p>
@@ -98,42 +98,40 @@ class ForumSample extends React.Component {
     ));
   };
 
-  render(){
-    console.log('State: ', this.state);
-    // JSX
-    return(
-      <div>
-        <h2>Upload Game</h2>
-        <form onSubmit={this.submit}>
-          <div className="form-input">
-            <input
-              type="text"
-              name="title"
-              placeholder="Game Title"
-              value={this.state.title}
-              onChange={this.handleChange}
-            />
-          </div>
-          <div className="form-input">
-            <textarea
-              name="description"
-              placeholder="Game Description"
-              cols="30"
-              rows="10"
-              value={this.state.description}
-              onChange={this.handleChange}
-            >
-            </textarea>
-          </div>
-          <button>Submit</button>
-        </form>
-
-        <div className="gameCards">
-          {this.displayGameCards(this.state.games)}
+  // JSX
+  return(
+    <div>
+      <h2>Upload Game</h2>
+      <form onSubmit={submit}>
+        <div className="form-input">
+          <input
+            type="text"
+            name="title"
+            placeholder="Game Title"
+            value={title}
+            onChange={handleTitleInput}
+          />
         </div>
+        <div className="form-input">
+          <textarea
+            name="description"
+            placeholder="Game Description"
+            cols="30"
+            rows="10"
+            value={description}
+            onChange={handleDescriptionInput}
+          >
+          </textarea>
+        </div>
+        <button>Submit</button>
+      </form>
+
+      <div className="gameCards">
+        {displayGameCards(games)}
       </div>
-    );
-  }
+    </div>
+  );
+
 }
 
 export default ForumSample;

@@ -65,7 +65,7 @@ app.use(cors({
 app.use('/api', require('./routes/forumRouter'));
 app.use('/auth', require('./routes/userRouter'));
 app.use('/researcher', require('./routes/researcherRouter'));
-app.use('/gameInfo', require('./routes/gamesRouter'));
+app.use('/gameInfo', require('./routes/gameRouter'));
 
 // STEP 3: Create Custom variable inside heroku to confirm
 // app is on heroku
