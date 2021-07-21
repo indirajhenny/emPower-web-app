@@ -8,6 +8,7 @@ const GameUpload = require('../models/gameUpload');
 router.get('/info', (req, res) => {
   // hard-coded JSON data for now sent to the client
   // use model to insert data into db
+
   GameUpload.find({ })
     // sending data coming in from the database
     .then((data) => {
@@ -26,6 +27,7 @@ router.get('/info', (req, res) => {
 // handles data coming in from the client/browser
 router.post('/save', (req, res) => {
   // body is the entirety of the data, this identifier cannot change
+
   console.log('Body: ', req.body);
   // save body data into db
   const data = req.body;
@@ -45,5 +47,6 @@ router.post('/save', (req, res) => {
 
 
 });
+
 
 module.exports = router;

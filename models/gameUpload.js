@@ -7,9 +7,11 @@ const Schema = mongoose.Schema;
 const GameUploadSchema = new Schema({
   title: String,
   description: String,
+  approved: false,
   date: {
     type: String,
     default: Date.now()
+
   }
 });
 
