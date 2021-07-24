@@ -46,41 +46,6 @@ function ForumSample() {
   const handleDescriptionInput = e => {
     setDescription(e.target.value );
   }
-  // UPDATE: function to handle reply input
-
-  /*const updateQA = (event) => {
-    // create and format data to be sent to server
-    const payload = {
-      title: title, // get current value of useState
-      description: description,
-      approved: true,
-      reply: reply
-    };
-    console.log(payload);
-
-    // makes http request call
-    // make PUT request to send data to server
-    axios({
-      // where the server is waiting for request
-      // react app is communicating to our server using url
-      // and targeting specific route (/save) in order to
-      // send 'data' to server
-      url: '/forumQA/update/:id',
-      method: 'PUT', // what data are you sending
-      data: payload
-    })
-    .then(() => {
-      console.log('Data has been updated!');
-      // after form is submitted, this gets the latest data from
-      // the database
-      //getQuestionInfo();
-    })
-    .catch(() => {
-      console.log('Internal server error');
-    });
-
-  }*/
-
   // take data input and submitted in form and send to database
   const submit = (event) => {
     // stops browser from refreshing
@@ -142,7 +107,6 @@ function ForumSample() {
   }
   // contains question coming in/being received
   const displayQuestionCards = (questionsList) => {
-    // if empty return
     if (!questionsList.length) return null;
     // else loop through every game
     // always need index when looping through element
