@@ -56,7 +56,8 @@ router.post("/", async(req, res) => {
     // **** WHEN APP IS DEPLOYED, OTHER COOKIE OPTIONS REQUIRED
     res.cookie("token", token, {
       httpOnly: true
-    }).send();
+    }).send("Successfully registered and logged in!");
+    //res.status(200).send("Successfully registered!");
 
   } catch (err) {
     console.error(err);

@@ -1,59 +1,99 @@
-import React from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
+import AuthContext from '../context/AuthContext';
+import Card from 'react-bootstrap/Card';
+import Button from 'react-bootstrap/Button';
 
-// might need to change to function type instead of class
-class ForumSample extends React.Component {
+function ForumSample() {
 
   // set state that contains value of form inputs
-  state = {
-    title: '',
-    description: '',
-    games: []
-  }
+  const [title, setTitle] = useState('');
+  const [description, setDescription] = useState('');
+  // array of game data we've received from the database
+  const [questions, setQuestions] = useState([]);
+  const [reply, setReply] = useState('');
+
+  const {loggedIn} = useContext(AuthContext);
+  console.log(loggedIn);
 
   // get entire gameInfo data when react page mounts
-  componentDidMount = () => {
-    this.getGameInfo();
-  }
+  useEffect(() => {
+    getQuestionInfo();
+    // notice the [] below: this prevents a constant trigger
+    // whenever a component is updated, we only need a trigger once
+  }, [])
 
   // gets latest uploadedGame info data from server/DB
-  getGameInfo = () => {
-    axios.get('/api/info')
+  const getQuestionInfo = () => {
+    axios.get('/forumQA/info')
       // pass promise here
       .then((response) => {
-        // get data and set games state to data received from DB
+        // get data and set question state to data received from DB
         const data = response.data;
-        this.setState({ games: data });
+        setQuestions(data);
         console.log('Data has been received!');
       })
       .catch(() => {
         console.log('Error retrieving data!');
       })
   }
-
   // everytime the user is typing into test inputs
   // update state values. handleChange function does this
   // event is coming in, get target from event
-  handleChange = ({target}) => {
-    // get value of current element firing in event
-    // from target we can get what we need
-    const { name, value } = target;
-    // use values to update state
-    this.setState({
-      [name]: value
+  const handleTitleInput = e => {
+    setTitle(e.target.value);
+  }
+  const handleDescriptionInput = e => {
+    setDescription(e.target.value );
+  }
+  // UPDATE: function to handle reply input
+
+  /*const updateQA = (event) => {
+    // create and format data to be sent to server
+    const payload = {
+      title: title, // get current value of useState
+      description: description,
+      approved: true,
+      reply: reply
+    };
+    console.log(payload);
+
+    // makes http request call
+    // make PUT request to send data to server
+    axios({
+      // where the server is waiting for request
+      // react app is communicating to our server using url
+      // and targeting specific route (/save) in order to
+      // send 'data' to server
+      url: '/forumQA/update/:id',
+      method: 'PUT', // what data are you sending
+      data: payload
+    })
+    .then(() => {
+      console.log('Data has been updated!');
+      // after form is submitted, this gets the latest data from
+      // the database
+      //getQuestionInfo();
+    })
+    .catch(() => {
+      console.log('Internal server error');
     });
-  };
+
+  }*/
+
   // take data input and submitted in form and send to database
-  submit = (event) => {
+  const submit = (event) => {
     // stops browser from refreshing
     event.preventDefault();
 
     // create and format data to be sent to server
     const payload = {
-      title: this.state.title,
-      description: this.state.description
+      title: title, // get current value of useState
+      description: description,
+      approved: false,
+      reply: reply
     };
-
+    console.log(payload);
     // makes http request call
     // make a POST request to send data to server
     axios({
@@ -61,79 +101,98 @@ class ForumSample extends React.Component {
       // react app is communicating to our server using url
       // and targeting specific route (/save) in order to
       // send 'data' to server
-      url: '/api/save',
+      url: '/forumQA/save',
       method: 'POST', // what data are you sending
       data: payload
     })
       .then(() => {
         console.log('Data has been sent to the server');
-        this.resetUserInputs();
+        resetUserInputs();
         // after form is submitted, this gets the latest data from
         // the database
-        this.getGameInfo();
+        getQuestionInfo();
       })
       .catch(() => {
         console.log('Internal server error');
       });
 
   };
-
-  resetUserInputs = () => {
-    this.setState({
-      title: '',
-      description: ''
+  // qa_id is the datapoint's id -> what we use to differentiate
+  // this data point from all others in our mongoDB database
+  const approveQA = (qa_id) => {
+    // use qa_id to update the proper datapoint
+    console.log(qa_id);
+    axios.put('/forumQA/update/:id', {
+      approved: true,
+      id: qa_id
     })
+    .then(response => {
+      console.log(response);
+    })
+    .catch(error => {
+      console.log(error);
+    });
   }
-  // contains games coming in/being received
-  displayGameCards = (games) => {
+
+  // when user submits form, resets text input boxes to
+  // be empty/blank
+  const resetUserInputs = () => {
+    setTitle('');
+    setDescription('');
+  }
+  // contains question coming in/being received
+  const displayQuestionCards = (questionsList) => {
     // if empty return
-    if (!games.length) return null;
+    if (!questionsList.length) return null;
     // else loop through every game
     // always need index when looping through element
-    return games.map((game, index) => (
+    return questionsList.map((question, index) => (
       <div key={index}>
-        <h3>{game.title}</h3>
-        <p>{game.description}</p>
+        <Card>
+          <Card.Body>
+            <h3>{question.title}</h3>
+            <p>{question.description}</p>
+            <Button onClick={() => approveQA(question._id)}>Approve</Button>
+          </Card.Body>
+        </Card>
       </div>
     ));
   };
 
-  render(){
-    console.log('State: ', this.state);
-    // JSX
-    return(
-      <div>
-        <h2>Upload Game</h2>
-        <form onSubmit={this.submit}>
-          <div className="form-input">
-            <input
-              type="text"
-              name="title"
-              placeholder="Game Title"
-              value={this.state.title}
-              onChange={this.handleChange}
-            />
-          </div>
-          <div className="form-input">
-            <textarea
-              name="description"
-              placeholder="Game Description"
-              cols="30"
-              rows="10"
-              value={this.state.description}
-              onChange={this.handleChange}
-            >
-            </textarea>
-          </div>
-          <button>Submit</button>
-        </form>
-
-        <div className="gameCards">
-          {this.displayGameCards(this.state.games)}
+  // JSX
+  return(
+    <div>
+      <h2>Upload Question</h2>
+      <form onSubmit={submit}>
+        <div className="form-input">
+          <input
+            type="text"
+            name="title"
+            placeholder="Game Title"
+            value={title}
+            onChange={handleTitleInput}
+          />
         </div>
+        <div className="form-input">
+          <textarea
+            name="description"
+            placeholder="Question Description"
+            cols="30"
+            rows="10"
+            value={description}
+            onChange={handleDescriptionInput}
+          >
+          </textarea>
+        </div>
+        <button>Submit</button>
+      </form>
+
+      <div className="questionCards">
+        {displayQuestionCards(questions)}
       </div>
-    );
-  }
+    </div>
+  );
+
 }
 
 export default ForumSample;

@@ -30,7 +30,8 @@ const MONGODB_URI = process.env.MDB_CONNECT
 // to mongodb
 mongoose.connect(process.env.MDB_CONNECT || MONGODB_URI, {
   useNewUrlParser: true,
-  useUnifiedTopology: true
+  useUnifiedTopology: true,
+  useFindAndModify: false
 });
 
 // check if we're successfully connected to database
@@ -62,10 +63,10 @@ app.use(cors({
 // instead of '/', we could use '/api' if we decide
 // set up routes
 // change this to "./routes/forumRouter"
-app.use('/api', require('./routes/forumRouter'));
+app.use('/forumQA', require('./routes/forumRouter'));
 app.use('/auth', require('./routes/userRouter'));
 app.use('/researcher', require('./routes/researcherRouter'));
-app.use('/gameInfo', require('./routes/gamesRouter'));
+app.use('/gameInfo', require('./routes/gameRouter'));
 
 // STEP 3: Create Custom variable inside heroku to confirm
 // app is on heroku

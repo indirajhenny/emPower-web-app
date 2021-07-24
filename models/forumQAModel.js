@@ -4,10 +4,11 @@ const mongoose = require('mongoose');
 // data to mongodb database
 const Schema = mongoose.Schema;
 // review how to change name of keys below
-const GameUploadSchema = new Schema({
+const ForumQASchema = new Schema({
   title: String,
   description: String,
   approved: false,
+  reply: String,
   date: {
     type: String,
     default: Date.now()
@@ -15,6 +16,6 @@ const GameUploadSchema = new Schema({
 });
 
 // define Model and register Schema to it
-const GameUpload = mongoose.model('GameUpload', GameUploadSchema);
+const ForumQA = mongoose.model('ForumQA', ForumQASchema);
 // allows this model to be used anywhere else
-module.exports = GameUpload;
+module.exports = ForumQA;
