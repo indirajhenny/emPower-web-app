@@ -62,7 +62,7 @@ app.use(cors({
 // instead of '/', we could use '/api' if we decide
 // set up routes
 // change this to "./routes/forumRouter"
-app.use('/api', require('./routes/forumRouter'));
+app.use('/forumQA', require('./routes/forumRouter'));
 app.use('/auth', require('./routes/userRouter'));
 app.use('/researcher', require('./routes/researcherRouter'));
 app.use('/gameInfo', require('./routes/gameRouter'));
