@@ -3,6 +3,7 @@ import axios from 'axios';
 import AuthContext from '../context/AuthContext';
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
+import Modal from 'react-bootstrap/Modal';
 
 
 
@@ -14,6 +15,7 @@ function ForumSample() {
   // array of game data we've received from the database
   const [questions, setQuestions] = useState([]);
   const [reply, setReply] = useState('');
+  const [buttonPopup, setButtonPopup] = useState(false);
 
   const {loggedIn} = useContext(AuthContext);
   console.log(loggedIn);
@@ -127,11 +129,20 @@ function ForumSample() {
             <Button onClick={() => approveQA(question._id)}>Approve</Button>
           </Card.Body>
         </Card>
-        
+
         )}
       </div>
     ));
   };
+
+  function showAlert()
+  {
+
+
+    console.log("testing link");
+
+
+  }
 
   const displayApprovedQuestionCards = (questionsList) => {
     if (!questionsList.length) return null;
@@ -147,18 +158,20 @@ function ForumSample() {
         border = {'light'}
         text = {'light'}
         >
-          <Card.Body>
-            <h3>{question.title}</h3>
-            <p>{question.description}</p>
-            <p>{"Approved = " +question.approved}</p>
+          <Card.Body onClick = {() => showAlert()}>
+
+            <h4><a href = "#" >{question.title}</a></h4>
+
+            {/*{<p>{question.description}</p>}*/}
+            {/*for testing*/}
+            {/*<p>{"Approved = " +question.approved}</p>*/}
+
           </Card.Body>
         </Card>
       )}
       </div>
     ));
   };
-
-
 
   // JSX
   return(
