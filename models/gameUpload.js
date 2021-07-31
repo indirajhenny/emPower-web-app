@@ -7,6 +7,8 @@ const Schema = mongoose.Schema;
 const GameUploadSchema = new Schema({
   title: String,
   description: String,
+  link: String,
+  genre: String,
   date: {
     type: String,
     default: Date.now()
