@@ -8,7 +8,8 @@ const GameUploadSchema = new Schema({
   title: String,
   description: String,
   approved: false,
-  date: {
+  date:
+  {
     type: String,
     default: Date.now()
   }

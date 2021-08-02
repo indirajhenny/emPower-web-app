@@ -1,7 +1,8 @@
 import React from 'react';
-import './styles/Popup.css';
+import '../../styles/QuestionPopup.css';
+// TO-DO: create a form inside here
 
-function Popup(props) {
+function QuestionPopup(props) {
   // trigger = trigger to pop-up on window
   // if trigger == true, pop-up will show
   return (props.trigger) ? (
@@ -14,10 +15,11 @@ function Popup(props) {
         Close
         </button>
         {/*pass external elements & other stuff through this popup*/}
-        { props.children }
+        <h2> {props.question.title}</h2>
+        {props.question.description}
       </div>
     </div>
   ) : "";
 }
 
-export default Popup;
+export default QuestionPopup;
