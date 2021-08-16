@@ -12,7 +12,8 @@ import Form from 'react-bootstrap/Form';
 import axios from 'axios';
 
 // Function for Add Resource button Modal
-function AddResourceModal(props){
+function AddResourceModal(props)
+{
   return(
     <Modal
     {...props}
@@ -90,7 +91,7 @@ function AddResourceModal(props){
 
 // Displays the button and displays the modal when clicked
 function AddResourceButton() {
-  // Modal originally set to false 
+  // Modal originally set to false
   const [modalShow, setModalShow] = React.useState(false);
 
   // Displays on click
@@ -127,7 +128,7 @@ class Resources extends Component {
     axios.get('/api/info')
   }
 
-  render() {    
+  render() {
 
 
     // Bootstrap components for headers, cards and topic sidebar
@@ -139,7 +140,7 @@ class Resources extends Component {
           <Row classname="justify-content-md-center">
           <Col xs lg="10">
         <h1>Resources</h1>
-        <h2>Description of resource page...</h2>     
+        <h2>Description of resource page...</h2>
           </Col>
 
           <Col>
@@ -148,7 +149,7 @@ class Resources extends Component {
           </Col>
           </Row>
 
-        </Container>        
+        </Container>
 
           <br></br><br></br>
 
@@ -166,7 +167,7 @@ class Resources extends Component {
             </Col>
 
               <Col xs lg="8">
-                  
+
                   <Card>
                     <Card.Header as="h5"><small>Type of Resource</small></Card.Header>
                     <Card.Body>
