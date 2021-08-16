@@ -22,12 +22,14 @@ function ForumSample() {
 
   // get entire gameInfo data when react page mounts
   useEffect(() => {
+
     getQuestionInfo();
     // notice the [] below: this prevents a constant trigger
     // whenever a component is updated, we only need a trigger once
   }, [])
 
   // gets latest uploadedGame info data from server/DB
+
   const getQuestionInfo = () => {
     axios.get('/forumQA/info')
       // pass promise here
@@ -41,8 +43,6 @@ function ForumSample() {
         console.log('Error retrieving data!');
       })
   }
-
-
   // everytime the user is typing into test inputs
   // update state values. handleChange function does this
   // event is coming in, get target from event
@@ -88,6 +88,7 @@ function ForumSample() {
       });
 
   };
+
   // qa_id is the datapoint's id -> what we use to differentiate
   // this data point from all others in our mongoDB database
   const approveQA = (qa_id) => {
@@ -104,7 +105,6 @@ function ForumSample() {
       console.log(error);
     });
   }
-
   // when user submits form, resets text input boxes to
   // be empty/blank
   const resetUserInputs = () => {
