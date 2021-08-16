@@ -65,6 +65,7 @@ app.use(cors({
 app.use('/forumQA', require('./routes/forumRouter'));
 app.use('/auth', require('./routes/userRouter'));
 app.use('/researcher', require('./routes/researcherRouter'));
+app.use('/resourceInfo', require('./routes/resourceRouter'));
 app.use('/gameInfo', require('./routes/gameRouter'));
 
 // STEP 3: Create Custom variable inside heroku to confirm
