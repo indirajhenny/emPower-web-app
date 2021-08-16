@@ -4,7 +4,8 @@ import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import AuthContext from '../../context/AuthContext';
 import { useHistory} from 'react-router-dom';
-
+// UPDATED
+import Popup from '../../Popup.js';
 
 import axios from 'axios';
 //import FormControl from 'react-bootstrap/FormControl';
@@ -17,6 +18,9 @@ function Login() {
 
   const {getLoggedIn} = useContext(AuthContext);
   const history = useHistory();
+  const [buttonPopup, setButtonPopup] = useState(false);
+  let loginError = "";
+  let loginSuccess = false;
 
   async function login(e) {
     e.preventDefault();
@@ -30,10 +34,26 @@ function Login() {
       // makes http request call
       // make a POST request to send data to server
       // replace local host with future heroku host URL
-      await axios.post("http://localhost:8080/auth/login", loginData);
-      // updates logged in state
-      await getLoggedIn();
-      history.push("/");
+      await axios.post("http://localhost:8080/auth/login", loginData)
+      .then(res =>
+        {
+          console.log(res.data);
+          // updates login state
+          loginSuccess = true;
+        })
+      .catch(err =>
+        {
+          console.log(err.response.data.errorMessage);
+          loginError = err.response.data.errorMessage;
+          setButtonPopup(true);
+          //history.push("/");
+        });
+      if (loginSuccess === true)
+      {
+        await getLoggedIn();
+        history.push("/");
+      }
+
     } catch(err) {
       console.error(err);
     }
@@ -70,6 +90,10 @@ function Login() {
         </Button>
         </Form>
     </Container>
+    {/*UPDATED POP-UP*/}
+    <Popup trigger={buttonPopup} setTrigger={setButtonPopup}>
+      <h3>Error logging in</h3>
+    </Popup>
     </div>
   )
 }

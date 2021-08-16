@@ -1,16 +1,31 @@
-import React, { Component } from 'react';
+import React, { Component, useContext, useState, useEffect} from 'react';
 import Carousel from 'react-bootstrap/Carousel';
 import Nav from 'react-bootstrap/Nav';
 
 import labyrinth from "../../assets/images/labyrinth.webp";
 import twine from "../../assets/images/twine.png";
 import Resources from "../../assets/images/Resources.png";
+import AuthContext from '../context/AuthContext';
+// UPDATED
+import Popup from '../Popup.js';
 
-import '../styles/home.css';
+//class Home extends Component {
+function Home() {
+  //render() {
+  // UPDATED
+  const {loggedIn} = useContext(AuthContext);
+  const [buttonPopup, setButtonPopup] = useState(false);
 
-
-class Home extends Component {
-  render() {
+  // UPDATED: only renders ONCE
+  useEffect(() => {
+    let flagLoggedIn = loggedIn;
+    console.log("flag: ", flagLoggedIn);
+    if (flagLoggedIn === true)
+    {
+      setButtonPopup(true);
+      flagLoggedIn = false;
+    }
+  }, []);
 
     return (
 
@@ -23,7 +38,6 @@ class Home extends Component {
 
                 <h3>Play Analilia</h3>
                 <a href="Games"><b>Download Analilia</b></a>
-
 
               </Carousel.Caption>
           </Carousel.Item>
@@ -46,6 +60,10 @@ class Home extends Component {
           </Carousel.Item>
         </Carousel>
 
+        <Popup trigger={buttonPopup} setTrigger={setButtonPopup}>
+          <h3>successfully logged in</h3>
+        </Popup>
+
               <h2 class = "homeHeader">About us</h2>
               <p><b>emPower Through Play</b> is a resource that focuses primarily on diversity and leadership.
               Check out our <em>Games</em>, <em>Forums</em>, and various <em>Resources</em> by clicking on their respected links up top.
@@ -60,6 +78,6 @@ class Home extends Component {
       </div>
 
     )
-  }
+  //}
 }
 export default Home;

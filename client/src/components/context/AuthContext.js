@@ -10,6 +10,12 @@ function AuthContextProvider(props) {
   async function getLoggedIn() {
     // get logged in state as a response from server
     const loggedInRes = await axios.get("http://localhost:8080/auth/loggedIn");
+    //console.log(loggedInRes);
+    //console.log(loggedInRes.data);
+    /*if (loggedInRes.data === true)
+       console.log("User successfully logged in");
+    else if (loggedInRes.data === false)
+      console.log("User FAILED logged in");*/
     setLoggedIn(loggedInRes.data); // returns T/F
   }
   // detect when website is started up

@@ -10,7 +10,9 @@ function Popup(props) {
         <button
           className="close-btn"
           onClick={() => props.setTrigger(false)}
-        >Close</button>
+        >
+        Close
+        </button>
         {/*pass external elements & other stuff through this popup*/}
         { props.children }
       </div>

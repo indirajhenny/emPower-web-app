@@ -6,6 +6,7 @@ import axios from 'axios';
 import AuthContext from '../../context/AuthContext';
 import { useHistory} from 'react-router-dom';
 //import Modal from 'react-bootstrap/Modal';
+import Popup from '../../Popup.js';
 
 function Register() {
 
@@ -16,11 +17,10 @@ function Register() {
 
   const {getLoggedIn} = useContext(AuthContext);
   const history = useHistory();
-  //const {loggedIn} = useContext(AuthContext);
 
-  /*const [show, setShow] = useState(false);
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);*/
+  const [buttonPopup, setButtonPopup] = useState(false);
+  let registerError = "";
+  let loginSuccess = false;
 
   async function register(e) {
     e.preventDefault();
@@ -36,10 +36,23 @@ function Register() {
       // makes http request call
       // make a POST request to send data to server
       // replace local host with future heroku host URL
-      await axios.post("http://localhost:8080/auth/", registerData);
-      await getLoggedIn();
-      // Pop-up Model confirming successful registration TBD
-      history.push("/");
+      await axios.post("http://localhost:8080/auth/", registerData)
+        .then(res =>
+          {
+            console.log(res.data);
+            loginSuccess = true;
+          })
+        .catch(err =>
+          {
+            console.log(err.response.data.errorMessage);
+            registerError = err.response.data.errorMessage;
+            setButtonPopup(true);
+          });
+      if (loginSuccess === true)
+      {
+        await getLoggedIn();
+        history.push("/");
+      }
     } catch(err) {
       console.error(err);
     }
@@ -90,6 +103,10 @@ function Register() {
         {/*get variable that sets trigger variable to true
           aka set a conditional trigger*/}
     </Container>
+    <Popup trigger={buttonPopup} setTrigger={setButtonPopup}>
+      <h3>Error Registering</h3>
+    </Popup>
+
     </div>
   )
 }

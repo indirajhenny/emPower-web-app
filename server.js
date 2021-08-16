@@ -30,7 +30,8 @@ const MONGODB_URI = process.env.MDB_CONNECT
 // to mongodb
 mongoose.connect(process.env.MDB_CONNECT || MONGODB_URI, {
   useNewUrlParser: true,
-  useUnifiedTopology: true
+  useUnifiedTopology: true,
+  useFindAndModify: false
 });
 
 // check if we're successfully connected to database

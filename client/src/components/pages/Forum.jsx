@@ -25,14 +25,12 @@ function ForumSample() {
 
   // get entire gameInfo data when react page mounts
   useEffect(() => {
-
     getQuestionInfo();
     // notice the [] below: this prevents a constant trigger
     // whenever a component is updated, we only need a trigger once
   }, [])
 
   // gets latest uploadedGame info data from server/DB
-
   const getQuestionInfo = () => {
     axios.get('/forumQA/info')
       // pass promise here
@@ -92,7 +90,6 @@ function ForumSample() {
 
   };
 
-
   const handleCallback = (childData, current_question) => {
     if (childData === true)
     {
@@ -101,7 +98,6 @@ function ForumSample() {
       setButtonPopup(true);
     }
   }
-
   // qa_id is the datapoint's id -> what we use to differentiate
   // this data point from all others in our mongoDB database
   const approveQA = (qa_id) => {
