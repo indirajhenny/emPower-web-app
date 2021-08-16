@@ -3,10 +3,7 @@ import axios from 'axios';
 import AuthContext from '../context/AuthContext';
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
-import QuestionCard from './forumComponents/QuestionCard.js';
-//import Popup from '../Popup.js';
-import QuestionPopup from './forumComponents/QuestionPopup.js'
-
+import Popup from '../Popup.js';
 
 function ForumSample() {
 
@@ -18,21 +15,18 @@ function ForumSample() {
   const [reply, setReply] = useState('');
   const [buttonPopup, setButtonPopup] = useState(false);
   const [currentDescription, setCurrentDescription] = useState('');
-  const [currentQuestion, setCurrentQuestion] = useState(null);
 
   const {loggedIn} = useContext(AuthContext);
   console.log(loggedIn);
 
   // get entire gameInfo data when react page mounts
   useEffect(() => {
-
     getQuestionInfo();
     // notice the [] below: this prevents a constant trigger
     // whenever a component is updated, we only need a trigger once
   }, [])
 
   // gets latest uploadedGame info data from server/DB
-
   const getQuestionInfo = () => {
     axios.get('/forumQA/info')
       // pass promise here
@@ -53,7 +47,7 @@ function ForumSample() {
     setTitle(e.target.value);
   }
   const handleDescriptionInput = e => {
-    setDescription(e.target.value );
+    setDescription(e.target.value);
   }
   // take data input and submitted in form and send to database
   const submit = (event) => {
@@ -91,17 +85,11 @@ function ForumSample() {
       });
 
   };
-
-
-  const handleCallback = (childData, current_question) => {
-    if (childData === true)
-    {
-      //setCurrentDescription(current_question.description);
-      setCurrentQuestion(current_question);
-      setButtonPopup(true);
-    }
+  const showPopup = (current_description) => {
+    console.log("Testing link");
+    setButtonPopup(true);
+    setCurrentDescription(current_description);
   }
-
   // qa_id is the datapoint's id -> what we use to differentiate
   // this data point from all others in our mongoDB database
   const approveQA = (qa_id) => {
@@ -118,6 +106,7 @@ function ForumSample() {
       console.log(error);
     });
   }
+
   // when user submits form, resets text input boxes to
   // be empty/blank
   const resetUserInputs = () => {
@@ -131,37 +120,13 @@ function ForumSample() {
     // always need index when looping through element
     return questionsList.map((question, index) => (
       <div key={index}>
-        {/*<QuestionCard curr_question={question, handleCallback}/>*/}
-        <QuestionCard curr_question={question} parentCallback={handleCallback}/>
-      </div>
-    ));
-  };
-
-  const displayApprovedQuestionCards = (questionsList) => {
-    if (!questionsList.length) return null;
-    // else loop through every game
-    // always need index when looping through element
-    return questionsList.map((question, index) => (
-
-      <div key={index}>
-      {question.approved === true && (
-
-        <QuestionCard curr_question={question} parentCallback={handleCallback}/>
-    //  {
-    /*  <Card
-        bg = {'dark'}
-        border = {'light'}
-        text = {'light'}
-        >
-
+        <Card>
           <Card.Body>
-            <h4><a href = "#" >{question.title}</a></h4>
+            <h3 onClick = {() => showPopup(question.description)}> {question.title}</h3>
+            {/*<p>{question.description}</p>*/}
+            <Button onClick={() => approveQA(question._id)}>Approve</Button>
           </Card.Body>
-
-        </Card>*/
-      //}
-
-      )}
+        </Card>
       </div>
     ));
   };
@@ -194,22 +159,12 @@ function ForumSample() {
         <button>Submit</button>
       </form>
 
-      {loggedIn === true &&(
       <div className="questionCards">
         {displayQuestionCards(questions)}
       </div>
-      )}
-
-      {loggedIn === false &&(
-        <div>
-          {
-            displayApprovedQuestionCards(questions)
-          }
-        </div>
-      )}
-
-      <QuestionPopup trigger={buttonPopup} setTrigger={setButtonPopup} question={currentQuestion}>
-      </QuestionPopup>
+      <Popup trigger={buttonPopup} setTrigger={setButtonPopup}>
+        {currentDescription}
+      </Popup>
     </div>
   );
 

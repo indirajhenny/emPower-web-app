@@ -160,6 +160,7 @@ function Resource() {
             </Modal.Header>
 
             <Modal.Body>
+
         <Form>
           <Form.Group as={Row}>
           <Form.Label column sm="3">Title</Form.Label>
@@ -204,15 +205,17 @@ function Resource() {
         <Button onClick={handleClose}>Close</Button>
       </Modal.Footer>
 
+
       </Modal>
  
 
             </>
           )}
+
           </Col>
           </Row>
 
-        </Container>        
+        </Container>
 
           <br></br><br></br>
 
@@ -230,8 +233,10 @@ function Resource() {
             </Col>
 
               <Col xs lg="8">
+
                   
                   {displayResourceCards(resources)};
+
 
               </Col>
             </Row>
