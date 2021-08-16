@@ -114,7 +114,6 @@ function ForumSample() {
       console.log(error);
     });
   }
-
   // when user submits form, resets text input boxes to
   // be empty/blank
   const resetUserInputs = () => {
@@ -130,6 +129,35 @@ function ForumSample() {
       <div key={index}>
         {/*<QuestionCard curr_question={question, handleCallback}/>*/}
         <QuestionCard curr_question={question} parentCallback={handleCallback}/>
+      </div>
+    ));
+  };
+
+  const displayApprovedQuestionCards = (questionsList) => {
+    if (!questionsList.length) return null;
+    // else loop through every game
+    // always need index when looping through element
+    return questionsList.map((question, index) => (
+
+      <div key={index}>
+      {question.approved === true && (
+
+        <QuestionCard curr_question={question} parentCallback={handleCallback}/>
+    //  {
+    /*  <Card
+        bg = {'dark'}
+        border = {'light'}
+        text = {'light'}
+        >
+
+          <Card.Body>
+            <h4><a href = "#" >{question.title}</a></h4>
+          </Card.Body>
+
+        </Card>*/
+      //}
+
+      )}
       </div>
     ));
   };
@@ -162,9 +190,20 @@ function ForumSample() {
         <button>Submit</button>
       </form>
 
+      {loggedIn === true &&(
       <div className="questionCards">
         {displayQuestionCards(questions)}
       </div>
+      )}
+
+      {loggedIn === false &&(
+        <div>
+          {
+            displayApprovedQuestionCards(questions)
+          }
+        </div>
+      )}
+
       <QuestionPopup trigger={buttonPopup} setTrigger={setButtonPopup} question={currentQuestion}>
       </QuestionPopup>
     </div>

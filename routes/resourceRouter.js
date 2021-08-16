@@ -1,14 +1,14 @@
 const express = require('express');
 const router = express.Router();
-// bring in games model to use here
-const games = require('../models/gameUpload');
+// bring in resources model to use here
+const resources = require('../models/resources');
 
 // Routes - define routes inside server that determines
 //  what is sent to and received by the client
 router.get('/info', (req, res) => {
   // hard-coded JSON data for now sent to the client
   // use model to insert data into db
-  games.find({ })
+  resources.find({ })
     // sending data coming in from the database
     .then((data) => {
       // returns data
@@ -30,19 +30,20 @@ router.post('/save', (req, res) => {
   // save body data into db
   const data = req.body;
 
-  const newGameUpload = new games(data);
+  const newResourceUpload = new resources(data);
   // use .save model method to save data into model to sent to DB
-  newGameUpload.save((error) => {
+  newResourceUpload.save((error) => {
     if (error) {
-      res.status(500).json({ msg: 'Sorry, internal server erro'});
+      res.status(500).json({ msg: 'Sorry, internal server error'});
       return;
     }
-    // games
+    // resources
     return res.json({
       msg: 'Your data has been saved!'
     });
   });
-});
 
+
+});
 
 module.exports = router;
