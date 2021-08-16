@@ -1,115 +1,51 @@
-
-import React from 'react';
-
+import Card from 'react-bootstrap/Card';
+import React, { useState, useEffect, useContext } from 'react';
 import Button from 'react-bootstrap/Button';
-import { Card } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
-
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
 import axios from 'axios';
+import AuthContext from '../context/AuthContext';
 
-function AddGameModal(props) {
-  return (
-    <Modal
-      {...props}
-      size="lg"
-      aria-labelledby="contained-modal-title-vcenter"
-      centered>
+function testDate(d) {
 
-      <Modal.Header closeButton>
-        <Modal.Title id="contained-modal-title-vcenter">
-          Add Game
-        </Modal.Title>
-      </Modal.Header>
+  d = parseInt(d);
+  d = new Date(d).toLocaleDateString();
 
-      <Modal.Body>
-        <Form>
-          <Form.Group as={Row}>
-            <Form.Label column sm="3">Title</Form.Label>
-            <Col sm="8">
-              <Form.Control type="text" placeholder="Enter the title of the game here." />
-            </Col>
-          </Form.Group>
-
-          <Form.Group as={Row}>
-            <Form.Label column sm="3">Description</Form.Label>
-            <Col sm="8">
-              <Form.Control type="text" as="textarea" placeholder="Enter a brief description of the game here." />
-            </Col>
-          </Form.Group>
-
-          <Form.Group as={Row}>
-            <Form.Label column sm="3">Downloadable link</Form.Label>
-            <Col sm="8">
-              <Form.Control type="text" />
-            </Col>
-          </Form.Group>
-
-          <Form.Group as={Row} controlId="exampleForm.ControlSelect2">
-            <Form.Label column sm="3">Type of Game</Form.Label>
-            <Col sm="8">
-              <Form.Control type="text" placeholder="Enter the genre of the game here." />
-            </Col>
-          </Form.Group>
-
-
-        </Form>
-      </Modal.Body>
-
-      <Modal.Footer>
-        <Button variant="submit">Submit</Button>
-        <Button onClick={props.onHide}>Close</Button>
-      </Modal.Footer>
-
-    </Modal>
-  )
+  return d;
 }
 
-
-function AddGameButton() {
-
-  const [modalShow, setModalShow] = React.useState(false);
-
-  return (
-    <>
-
-      <Button variant="primary" onClick={() => setModalShow(true)}>Add Game</Button>
-
-      <AddGameModal show={modalShow} onHide={() => setModalShow(false)} />
-
-    </>
-
-  );
-}
-
-class Games extends React.Component {
+function Game() {
 
   // set state that contains value of form inputs
-  state = {
-    title: '',
-    description: '',
-    link: '',
-    genre: '',
-    games: []
-  }
+  const [title, setTitle] = useState('');
+  const [description, setDescription] = useState('');
+  const [games, setGames] = useState([]);
+  const [link, setLink] = useState([]);
+  const [genre, setGenre] = useState([]);
+  const [show, setShow] = React.useState(false);
+  const { loggedIn } = useContext(AuthContext);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
 
   // get entire gameInfo data when react page mounts
-  componentDidMount = () => {
-    this.getGameInfo();
-  }
+  useEffect(() => {
+    getGameInfo();
+    // notice the [] below: this prevents a constant trigger
+    // whenever a component is updated, we only need a trigger once
+  }, [])
 
   // gets latest uploadedGame info data from server/DB
-  getGameInfo = () => {
+  const getGameInfo = () => {
     axios.get('/gameInfo/info')
       // pass promise here
       .then((response) => {
         // get data and set games state to data received from DB
         const data = response.data;
-        this.setState({ games: data });
+        setGames(data);
         console.log('Data has been received!');
       })
       .catch(() => {
@@ -120,26 +56,31 @@ class Games extends React.Component {
   // everytime the user is typing into test inputs
   // update state values. handleChange function does this
   // event is coming in, get target from event
-  handleChange = ({ target }) => {
-    // get value of current element firing in event
-    // from target we can get what we need
-    const { name, value } = target;
-    // use values to update state
-    this.setState({
-      [name]: value
-    });
-  };
+  // get value of current element firing in event
+  // from target we can get what we need
+  const handleTitleInput = e => {
+    setTitle(e.target.value);
+  }
+  const handleDescriptionInput = e => {
+    setDescription(e.target.value);
+  }
+  const handleLinkInput = e => {
+    setLink(e.target.value);
+  }
+  const handleGenreInput = e => {
+    setGenre(e.target.value);
+  }
   // take data input and submitted in form and send to database
-  submit = (event) => {
+  const submit = (event) => {
     // stops browser from refreshing
     event.preventDefault();
 
     // create and format data to be sent to server
     const payload = {
-      title: this.state.title,
-      description: this.state.description,
-      link: this.state.link,
-      genre: this.state.genre
+      title: title,
+      description: description,
+      link: link,
+      genre: genre
     };
 
     // makes http request call
@@ -155,10 +96,10 @@ class Games extends React.Component {
     })
       .then(() => {
         console.log('Data has been sent to the server');
-        this.resetUserInputs();
+        resetUserInputs();
         // after form is submitted, this gets the latest data from
         // the database
-        this.getGameInfo();
+        getGameInfo();
       })
       .catch(() => {
         console.log('Internal server error');
@@ -166,48 +107,135 @@ class Games extends React.Component {
 
   };
 
-  resetUserInputs = () => {
-    this.setState({
-      title: '',
-      description: '',
-      link: '',
-      genre: ''
-    })
+  const resetUserInputs = () => {
+    setTitle('');
+    setDescription('');
+    setLink('');
+    setGenre('');
   }
   // contains games coming in/being received
-  displayGameCards = (games) => {
+  const displayGameCards = (games) => {
     // if empty return
     if (!games.length) return null;
     // else loop through every game
     // always need index when looping through element
-    return games.map((game, index) => (
+    return games.slice(0).reverse().map((game, index) => (
       <div key={index}>
-        <h3>{game.title}</h3>
-        <p>{game.description}</p>
+        <br></br>
+        <Card className="text-center">
+          <Card.Body>
+            <Card.Title>{game.title}</Card.Title>
+            <Card.Text>
+              {game.description}
+              <br></br>
+              <br></br>
+              Genre: {game.genre}
+            </Card.Text>
+            <Button variant="primary" href={game.link}>{game.title}</Button>
+          </Card.Body>
+          <Card.Footer>{testDate(game.date)}</Card.Footer>
+        </Card>
       </div>
     ));
   };
 
-  render() {
-    return (
-      <div className="Resources">
-        <br></br>
+  return (
+    <div className="games">
+      <br></br>
+      <Container>
+        <Row classname="justify-content-md-center">
+          <Col xs lg="10">
+            <h1>Welcome to the Games Section!</h1>
+            <h4>
+              <br></br>
+              Here you will find a list of games submitted by various users! If you are logged in
+              and would like to share a game, please click the button below to add your own game.
+              <br></br>
+              <br></br>
+              {loggedIn === true && (
+                <>
+                  <Button variant="primary" onClick={handleShow}>
+                    Add Game
+                  </Button>
+                  <Modal show={show} onHide={handleClose} size="lg" centered>
 
-        <Container>
-          <Row classname="justify-content-md-center">
-            <Col xs lg="8">
-              <h1>Welcome to the Games Section!</h1>
-              <h4>Here you will find a list of games submitted by various users! If you are logged in
-                and would like to share a game, please click the button below to add your own game.
-              </h4>
-              <AddGameButton/>
-            </Col>
-          </Row>
-        </Container>
+                    <Modal.Header closeButton>
+                      <Modal.Title id="contained-modal-title-vcenter">
+                        Add Game
+                      </Modal.Title>
+                    </Modal.Header>
 
-      </div>
-    )
-  }
+                    <Modal.Body>
+                      <Form onSubmit={submit}>
+                        <Form.Group as={Row}>
+                          <Form.Label column sm="3">Title</Form.Label>
+                          <Col sm="8">
+                            <Form.Control type="text" 
+                            placeholder="Enter the title of the game here."
+                            value={title}
+                            onChange={handleTitleInput} />
+                          </Col>
+                        </Form.Group>
 
+                        <Form.Group as={Row}>
+                          <Form.Label column sm="3">Description</Form.Label>
+                          <Col sm="8">
+                            <Form.Control type="text" as="textarea" 
+                            placeholder="Enter a brief description of the game here."
+                            value={description}
+                            onChange={handleDescriptionInput} />
+                          </Col>
+                        </Form.Group>
+
+                        <Form.Group as={Row}>
+                          <Form.Label column sm="3">Link</Form.Label>
+                          <Col sm="8">
+                            <Form.Control type="text" 
+                            placeholder="Enter link to your game here. Please include 'https://'"
+                            value={link}
+                            onChange={handleLinkInput} />
+                          </Col>
+                        </Form.Group>
+
+                        <Form.Group as={Row}>
+                          <Form.Label column sm="3">Type of Game</Form.Label>
+                          <Col sm="8">
+                            <Form.Control type="text" 
+                            placeholder="Enter the genre of the game here."
+                            value={genre}
+                            onChange={handleGenreInput} />
+                          </Col>
+                        </Form.Group>
+                      </Form>
+
+                    </Modal.Body>
+
+                    <Modal.Footer>
+                      <Button onClick={submit}>Submit</Button>
+                      <Button onClick={handleClose}>Close</Button>
+                    </Modal.Footer>
+
+                  </Modal>
+                </>
+              )}
+              <br></br>
+              <br></br>
+              Otherwise, please log in if you would like to submit a game.
+              <br></br>
+            </h4>
+
+          </Col>
+        </Row>
+      </Container>
+
+      <Container>
+        <Row classname="d-flex justify-content-center">
+          <Col xs lg="8">
+            {displayGameCards(games)}
+          </Col>
+        </Row>
+      </Container>
+    </div>
+  )
 }
-export default Games;
+export default Game;
