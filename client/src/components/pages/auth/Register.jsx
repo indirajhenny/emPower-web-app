@@ -5,8 +5,10 @@ import Container from 'react-bootstrap/Container';
 import axios from 'axios';
 import AuthContext from '../../context/AuthContext';
 import { useHistory} from 'react-router-dom';
+import Card from 'react-bootstrap/Card';
 //import Modal from 'react-bootstrap/Modal';
 import Popup from '../../Popup.js';
+import '../.././styles/Register.css';
 
 function Register() {
 
@@ -62,6 +64,23 @@ function Register() {
     <div className="Register">
     <Container>
       {/*<Form onSubmit={register}>*/}
+      <Card 
+      style={{
+        alignItems: "center",
+        margin: "0 auto",
+        marginTop: "15%",
+        width: "500pt",
+        height: "350pt"}}>
+        <Card.Title
+        style={{
+          color: "#682D43",
+          textAlign: "center",
+          fontSize: "xx-large",
+          paddingTop: "10pt"}}><h8>
+          Register</h8></Card.Title>
+        <Card.Text style={{textAlign: "center"}}>You must be an emPower Through Play sponsor to create an account.
+          <br></br>
+          You do <b>not</b> need an account to play <i>Analilia</i>.</Card.Text>
       <Form >
         <Form.Group controlId="formBasicEmail">
           <Form.Label>Email address</Form.Label>
@@ -96,10 +115,11 @@ function Register() {
           />
         </Form.Group>
         {/*<Button variant="primary" type="submit"*/}
-        <Button variant="primary" onClick={register}>
+        <Button variant="secondary" onClick={register}>
           Submit
         </Button>
         </Form>
+        </Card>
         {/*get variable that sets trigger variable to true
           aka set a conditional trigger*/}
     </Container>

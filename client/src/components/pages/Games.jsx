@@ -9,6 +9,7 @@ import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
 import axios from 'axios';
 import AuthContext from '../context/AuthContext';
+import '.././styles/Games.css';
 
 function testDate(d) {
 
@@ -103,7 +104,9 @@ function Game() {
       })
       .catch(() => {
         console.log('Internal server error');
-      });
+      })
+
+      setShow(false);
 
   };
 
@@ -122,16 +125,19 @@ function Game() {
     return games.slice(0).reverse().map((game, index) => (
       <div key={index}>
         <br></br>
-        <Card className="text-center">
+        <Card
+        style={{
+          width: '30rem',
+          marginRight: "50pt"
+        }}>
           <Card.Body>
-            <Card.Title>{game.title}</Card.Title>
+            <Card.Title>{game.title} <small><i>{game.genre}</i></small></Card.Title>
             <Card.Text>
               {game.description}
               <br></br>
               <br></br>
-              Genre: {game.genre}
             </Card.Text>
-            <Button variant="primary" href={game.link}>{game.title}</Button>
+            <Button variant="primary" href={game.link}>Play {game.title}</Button>
           </Card.Body>
           <Card.Footer>{testDate(game.date)}</Card.Footer>
         </Card>
@@ -144,14 +150,11 @@ function Game() {
       <br></br>
       <Container>
         <Row classname="justify-content-md-center">
-          <Col xs lg="10">
-            <h1>Welcome to the Games Section!</h1>
-            <h4>
-              <br></br>
-              Here you will find a list of games submitted by various users! If you are logged in
-              and would like to share a game, please click the button below to add your own game.
-              <br></br>
-              <br></br>
+          <Col xs lg="12">
+            <h1 style={{color: "white"}}>More Games</h1>
+            <h4 style={{color: "white", fontSize: "18px"}}><i>Other games featured by emPower Through Play sponsors. Links will open a new window.</i></h4>
+            
+  
               {loggedIn === true && (
                 <>
                   <Button variant="primary" onClick={handleShow}>
@@ -219,22 +222,16 @@ function Game() {
                 </>
               )}
               <br></br>
-              <br></br>
-              Otherwise, please log in if you would like to submit a game.
-              <br></br>
-            </h4>
+            
 
           </Col>
         </Row>
       </Container>
 
-      <Container>
-        <Row classname="d-flex justify-content-center">
-          <Col xs lg="8">
+            <Container>
+            <Row>
             {displayGameCards(games)}
-          </Col>
-        </Row>
-      </Container>
+            </Row></Container>
     </div>
   )
 }

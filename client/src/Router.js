@@ -29,7 +29,7 @@ function Router() {
            <Switch>
             <Route path="/" component={Home} exact/>
             <Route path="/Games" component={Games}/>
-            <Route path="/Resources" component={Resources}/>
+            {/*<Route path="/Resources" component={Resources}/>*/}
             <Route path="/Forum" component={Forum}/>
             {/*<Route path="/Register" component={Register}/>*/}
             {loggedIn === false && (

@@ -1,11 +1,14 @@
 import React, { useState, useContext } from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
+import Card from 'react-bootstrap/Card';
 import Container from 'react-bootstrap/Container';
 import AuthContext from '../../context/AuthContext';
 import { useHistory} from 'react-router-dom';
 // UPDATED
 import Popup from '../../Popup.js';
+
+import '../.././styles/Login.css';
 
 import axios from 'axios';
 //import FormControl from 'react-bootstrap/FormControl';
@@ -61,6 +64,19 @@ function Login() {
   return (
     <div className="Login">
     <Container>
+      <Card
+      style={{
+        alignItems: "center",
+        margin: "0 auto",
+        marginTop: "15%",
+        width: "425pt",
+        height: "275pt"}}>
+          <Card.Title
+          style={{
+              color: "#682D43",
+              textAlign: "center",
+              fontSize: "xx-large",
+              paddingTop: "10pt"}}><h8>Login</h8></Card.Title>
       <Form onSubmit={login}>
         <Form.Group controlId="formBasicEmail">
           <Form.Label>Email address</Form.Label>
@@ -85,10 +101,11 @@ function Login() {
           />
         </Form.Group>
 
-        <Button variant="primary" type="submit">
+        <Button variant="secondary" type="submit">
           Log In
         </Button>
         </Form>
+        </Card>
     </Container>
     {/*UPDATED POP-UP*/}
     <Popup trigger={buttonPopup} setTrigger={setButtonPopup}>
