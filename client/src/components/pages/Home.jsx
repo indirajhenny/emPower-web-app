@@ -66,10 +66,6 @@ function Home() {
               </Carousel.Caption>
           </Carousel.Item>
     </Carousel> */}
-
-        <Popup trigger={buttonPopup} setTrigger={setButtonPopup}>
-          <h3>successfully logged in</h3>
-        </Popup>
         <div
         style={{
             backgroundImage: "url(/labyrinth.webp)",
@@ -84,8 +80,8 @@ function Home() {
               <Container fluid>
                 <Row className="justify-content-md-center">
               <Col>
-              
-              <Card 
+
+              <Card
               style={{
                 width: '40rem',
                 marginTop: "5pt",
@@ -108,7 +104,11 @@ function Home() {
               </Card></Col></Row>
             </Container>
 
-         
+            <Popup trigger={buttonPopup} setTrigger={setButtonPopup}>
+              <h3>successfully logged in</h3>
+            </Popup>
+
+
 </div>
       </div>
 

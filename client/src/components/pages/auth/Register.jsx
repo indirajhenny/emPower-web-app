@@ -21,7 +21,7 @@ function Register() {
   const history = useHistory();
 
   const [buttonPopup, setButtonPopup] = useState(false);
-  let registerError = "";
+  const [registerError, setRegisterError] = useState("");
   let loginSuccess = false;
 
   async function register(e) {
@@ -46,15 +46,19 @@ function Register() {
           })
         .catch(err =>
           {
-            console.log(err.response.data.errorMessage);
-            registerError = err.response.data.errorMessage;
+            console.log(err.response.data.message);
+            //registerError = err.response.data.errorMessage;
+            setRegisterError(err.response.data.message);
+            //console.log(err.response.data);
+            //registerError = err.response.data;
             setButtonPopup(true);
           });
+      /*
       if (loginSuccess === true)
       {
         await getLoggedIn();
         history.push("/");
-      }
+      }*/
     } catch(err) {
       console.error(err);
     }
@@ -64,7 +68,7 @@ function Register() {
     <div className="Register">
     <Container>
       {/*<Form onSubmit={register}>*/}
-      <Card 
+      <Card
       style={{
         alignItems: "center",
         margin: "0 auto",
@@ -124,7 +128,7 @@ function Register() {
           aka set a conditional trigger*/}
     </Container>
     <Popup trigger={buttonPopup} setTrigger={setButtonPopup}>
-      <h3>Error Registering</h3>
+      <b>{registerError}</b>
     </Popup>
 
     </div>

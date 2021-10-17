@@ -22,7 +22,8 @@ function Login() {
   const {getLoggedIn} = useContext(AuthContext);
   const history = useHistory();
   const [buttonPopup, setButtonPopup] = useState(false);
-  let loginError = "";
+  const [registerError, setRegisterError] = useState("");
+
   let loginSuccess = false;
 
   async function login(e) {
@@ -46,8 +47,8 @@ function Login() {
         })
       .catch(err =>
         {
-          console.log(err.response.data.errorMessage);
-          loginError = err.response.data.errorMessage;
+          console.log(err.response.data.message);
+          setRegisterError(err.response.data.message);
           setButtonPopup(true);
           //history.push("/");
         });
@@ -109,7 +110,7 @@ function Login() {
     </Container>
     {/*UPDATED POP-UP*/}
     <Popup trigger={buttonPopup} setTrigger={setButtonPopup}>
-      <h3>Error logging in</h3>
+      <b>{registerError}</b>
     </Popup>
     </div>
   )
