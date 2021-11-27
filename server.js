@@ -55,7 +55,8 @@ app.use(cookieParser());
 app.use(cors({
   // array of accepted front-end origins that are accepted
   // ** TODO: when app is deployed, replace with name of deployed app
-  origin: ["http://localhost:3000"],
+  //origin: ["http://localhost:3000"],
+  origin: ["http://empowerthroughplay"],
   // allows axios to set credentials
   credentials: true // allow browser to set the cookie w/ account info
 }));

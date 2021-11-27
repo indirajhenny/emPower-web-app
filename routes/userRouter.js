@@ -10,6 +10,7 @@ const {v4: uuidv4} = require("uuid");
 
 // path for static verified page
 const path = require("path");
+const dotenv = require('dotenv');
 
 // nodemailer transporter
 let transporter = nodemailer.createTransport({
@@ -149,7 +150,8 @@ const sendAccountVerifiedEmail = ({email}, res) => {
 const sendVerificationEmail = ({_id, email}, res) => {
   // url to be used in the email
   // UPDATE: change this to heroku PORT later
-  const currentUrl = "http://localhost:8080/";
+  //const currentUrl = "http://localhost:8080/";
+  const currentUrl = process.env.PORT;
   const uniqueString = uuidv4() + _id;
 
   const mailOptions = {
@@ -271,7 +273,8 @@ router.get("/verify/:userId/:uniqueString", (req, res) => {
                       .deleteOne({userId})
                       .then(() => {
                         // UPDATE to heroku PORT later
-                        res.redirect('http://localhost:3000/Verified');
+                        //res.redirect('http://localhost:3000/Verified');
+                        res.redirect('http://empowerthroughplay/Verified');
                         console.log("EMAIL HAS BEEN VERIFIED!!");
                         //User
                           //.find({userId})

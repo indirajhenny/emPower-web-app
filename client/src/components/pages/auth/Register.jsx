@@ -39,7 +39,7 @@ function Register() {
       // makes http request call
       // make a POST request to send data to server
       // replace local host with future heroku host URL
-      await axios.post("http://localhost:8080/auth/", registerData)
+      await axios.post("/auth/", registerData)
         .then(res =>
           {
             console.log(res.data);

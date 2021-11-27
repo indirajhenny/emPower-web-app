@@ -6,10 +6,16 @@ const AuthContext = createContext();
 // provides logged in state T/F
 function AuthContextProvider(props) {
   const [loggedIn, setLoggedIn] = useState(undefined);
+  // reads local .env file for "hidden" process variables
+  //dotenv.config();
+  //const PORT = process.env.PORT || 8080;
 
   async function getLoggedIn() {
     // get logged in state as a response from server
-    const loggedInRes = await axios.get("http://localhost:8080/auth/loggedIn");
+    //const loggedInRes = await axios.get("http://localhost:8080/auth/loggedIn");
+    const loggedInRes = await axios.get("/auth/loggedIn");
+
+
     //console.log(loggedInRes);
     //console.log(loggedInRes.data);
     /*if (loggedInRes.data === true)
