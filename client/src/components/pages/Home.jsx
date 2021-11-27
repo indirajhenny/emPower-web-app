@@ -37,35 +37,6 @@ function Home() {
     return (
 
       <div className="Home">
-
-       {/*} <Carousel>
-          <Carousel.Item interval={10000} style={{'height':700}}>
-            <img className="d-block w-100" src={labyrinth} style={{'height':700}} alt="First slide" href="Games" />
-              <Carousel.Caption>
-
-                <h3>Play Analilia</h3>
-                <a href="Games"><b>Download Analilia</b></a>
-
-              </Carousel.Caption>
-          </Carousel.Item>
-
-          <Carousel.Item interval={10000}>
-            <img className="d-block w-100" src={twine} style={{'height':700}} alt="Second slide"/>
-              <Carousel.Caption>
-               <h3>Twine Game</h3>
-               <a href="Games"><b>Play the Twine Game.</b></a>
-              </Carousel.Caption>
-          </Carousel.Item>
-
-          <Carousel.Item interval={10000}>
-            <img className="d-block w-100" src={Resources} style={{'height':700}} alt="Third slide"/>
-              <Carousel.Caption>
-                <h3>Resources</h3>
-                <a href="Resources"><b>Click here for resources.</b></a>
-
-              </Carousel.Caption>
-          </Carousel.Item>
-    </Carousel> */}
         <div
         style={{
             backgroundImage: "url(/AnaliliaMenu.webp)",
