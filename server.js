@@ -73,6 +73,7 @@ app.use('/gameInfo', require('./routes/gameRouter'));
 // STEP 3: Create Custom variable inside heroku to confirm
 // app is on heroku
 if (process.env.NODE_ENV == 'production') {
+  console.log('production build!!');
   // put client aka react application production build
   // into our server
   app.use(express.static('client/build'));
