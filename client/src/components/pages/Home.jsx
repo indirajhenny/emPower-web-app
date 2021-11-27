@@ -105,7 +105,7 @@ function Home() {
             </Container>
 
             <Popup trigger={buttonPopup} setTrigger={setButtonPopup}>
-              <h3>successfully logged in</h3>
+              <h3>Successfully logged in!</h3>
             </Popup>
 
 

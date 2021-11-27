@@ -11,7 +11,7 @@ function Popup(props) {
           className="close-btn"
           onClick={() => props.setTrigger(false)}
         >
-        Close
+        <b>X</b>
         </button>
         {/*pass external elements & other stuff through this popup*/}
         { props.children }
