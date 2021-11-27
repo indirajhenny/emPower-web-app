@@ -8,6 +8,9 @@ const jwt = require("jsonwebtoken");
 const nodemailer = require("nodemailer");
 const {v4: uuidv4} = require("uuid");
 
+// path for static verified page
+const path = require("path");
+
 // nodemailer transporter
 let transporter = nodemailer.createTransport({
   service: "gmail",
@@ -113,9 +116,39 @@ router.post("/", async(req, res) => {
   }
 });
 
+const sendAccountVerifiedEmail = ({email}, res) => {
+  const mailOptions2 = {
+    from: process.env.AUTH_EMAIL,
+    to: email, // "empowerucf@gmail.com"
+    subject: "Account has been Verified!",
+    html: `<h3>Your registered account has been verified!</h3>
+            <p>You can now log-in and add resources to the emPower Through Play website.</p>`
+  };
+
+  transporter
+    .sendMail(mailOptions2)
+    .then(() => {
+      console.log("Verification email sent");
+      // email sent and verification record saved
+      res.json({
+        status: "PENDING",
+        message: "Verification email sent"
+      })
+    })
+    .catch((error) => {
+      console.log(error);
+      res.json({
+        status: "FAILED",
+        message: "Verifiation email failed"
+      })
+    })
+
+
+}
+
 const sendVerificationEmail = ({_id, email}, res) => {
   // url to be used in the email
-  // change this to heroku PORT later
+  // UPDATE: change this to heroku PORT later
   const currentUrl = "http://localhost:8080/";
   const uniqueString = uuidv4() + _id;
 
@@ -182,6 +215,7 @@ const sendVerificationEmail = ({_id, email}, res) => {
 router.get("/verify/:userId/:uniqueString", (req, res) => {
   // check if verificaiton record actually exists
   let { userId, uniqueString } = req.params;
+  console.log("Checking params in Verify email GET: " + req.params);
 
   // search UserVerification for userId
   UserVerification
@@ -197,7 +231,7 @@ router.get("/verify/:userId/:uniqueString", (req, res) => {
         if (expiresAt < Date.now()){
           // record no longer valid so we delete it
           UserVerification
-            .deleteOne({userId})
+            .deleteOne({userId}) // delete based off userId
             .then(result => {
               User
                 .deleteOne({_id: userId})
@@ -215,6 +249,8 @@ router.get("/verify/:userId/:uniqueString", (req, res) => {
             .catch((error) => {
               console.log(error);
               //res.status(401).send("Error occured while clearing expired user verification record.");
+              let message = "Error occured while clearing expired user verification record.";
+              res.redirect(`/verified/error=true&message=${message}`);
               res.status(401).json({message: "Error occured while clearing expired user verification record."});
             });
 
@@ -234,7 +270,12 @@ router.get("/verify/:userId/:uniqueString", (req, res) => {
                     UserVerification
                       .deleteOne({userId})
                       .then(() => {
+                        // UPDATE to heroku PORT later
+                        res.redirect('http://localhost:3000/Verified');
                         console.log("EMAIL HAS BEEN VERIFIED!!");
+                        //User
+                          //.find({userId})
+                        //sendAccountVerifiedEmail();
                       })
                       .catch((error) => {
                         //res.status(401).send("Error occured while finalizing successful verification.");
@@ -257,6 +298,8 @@ router.get("/verify/:userId/:uniqueString", (req, res) => {
         }
 
       } else {
+        let message = "Account record does not exist or has been verified already. Please sign up or log in.";
+        res.redirect(`/verified/error=true&message=${message}`);
         // user verification record does NOT exist
         //res.status(401).send("Account record does not exist or has been verified already. Please sign up or log in.");
         res.status(401).json({message:"Account record does not exist or has been verified already. Please sign up or log in."});
@@ -264,12 +307,19 @@ router.get("/verify/:userId/:uniqueString", (req, res) => {
     })
     .catch((error) => {
       console.log(error);
-      //let message = "An error has occurred while checking for existing user verification!";
+      let message = "An error has occurred while checking for existing user verification!";
+      res.redirect(`/verified/error=true&message=${message}`);
       // pass a message from backend to frontend
       //res.status(401).send("An error has occured while checking for existing user verification!");
       res.status(401).json({message:"An error has occured while checking for existing user verification!"});
     })
 })
+
+// verified page route
+/*router.get("/verified", (req, res) => {
+  console.log("Getting verified page route");
+  res.sendFile(path.join(__dirname, "../views/verified.html"));
+})*/
 
 // LOG-IN endpoint
 router.post("/login", async(req, res) => {
@@ -296,7 +346,7 @@ router.post("/login", async(req, res) => {
       if (!existingUser.verified) {
         // user is NOT verified
         return res.status(401) // unauthorized request
-        .json({message: "Account has not been verified. Please check your inbox."});
+        .json({message: "Account has not been verified. Wait for admin to verify you."});
       } else {
         // existing user is VERIFIED
         // check if input password is correct

@@ -1,6 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@900&display=swap');
-
-body{
-    background-color: #101233;
+.loginSetUp {
+  height: 100vh;
+  background-color: #101233;
 }
-

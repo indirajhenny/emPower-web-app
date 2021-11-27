@@ -10,6 +10,7 @@ import Form from 'react-bootstrap/Form';
 import axios from 'axios';
 import AuthContext from '../context/AuthContext';
 import '.././styles/Games.css';
+//import GameCards from "../GameCards";
 
 function testDate(d) {
 
@@ -31,12 +32,14 @@ function Game() {
   const { loggedIn } = useContext(AuthContext);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+  const [gameCardsState, setGameCardsState] = useState([]);
+
+  //const [gameCards, setGameGards] = useState([]);
+  const gameCards = [];
 
   // get entire gameInfo data when react page mounts
   useEffect(() => {
     getGameInfo();
-    // notice the [] below: this prevents a constant trigger
-    // whenever a component is updated, we only need a trigger once
   }, [])
 
   // gets latest uploadedGame info data from server/DB
@@ -48,6 +51,7 @@ function Game() {
         const data = response.data;
         setGames(data);
         console.log('Data has been received!');
+        console.log(data);
       })
       .catch(() => {
         console.log('Error retrieving data!');
@@ -71,6 +75,7 @@ function Game() {
   const handleGenreInput = e => {
     setGenre(e.target.value);
   }
+
   // take data input and submitted in form and send to database
   const submit = (event) => {
     // stops browser from refreshing
@@ -116,7 +121,51 @@ function Game() {
     setLink('');
     setGenre('');
   }
-  // contains games coming in/being received
+  const handleDelete = (event) => {
+    // stops browser from refreshing
+    //event.preventDefault();
+
+    // create and format data to be sent to server
+    const gameDelete = {
+      title: event.title,
+      _id: event._id
+    };
+    console.log("Game to be deleted: " + gameDelete);
+    axios.post('gameInfo/delete', gameDelete)
+      .then((res) => {
+        console.log('Data has been deleted: ' + res.data);
+        // after form is submitted, this gets the latest data from
+        // the database
+        getGameInfo();
+      })
+      .catch(() => {
+        console.log('Internal server error deleting data');
+      })
+
+      //setShow(false);
+
+  };
+
+  /*const handleDelete = (gameIndex) => {
+      console.log("Deleted Card Index: " + gameIndex);
+      //return gameIndex;
+
+      axios.post('/gameInfo/delete', gameIndex)
+        // pass promise here
+        .then((response) => {
+          // get data and set games state to data received from DB
+          const data = response.data;
+          console.log("Deleted game entry");
+          //setGames(data);
+          //console.log('Data has been received!');
+          //console.log(data);
+        })
+        .catch(() => {
+          console.log('Error deleting game data!');
+        })
+
+    }*/
+
   const displayGameCards = (games) => {
     // if empty return
     if (!games.length) return null;
@@ -138,6 +187,9 @@ function Game() {
               <br></br>
             </Card.Text>
             <Button variant="primary" href={game.link}>Play {game.title}</Button>
+            {loggedIn === true && (
+              <Button variant="primary" onClick={()=>{handleDelete(game)}}>Delete</Button>
+            )}
           </Card.Body>
           <Card.Footer>{testDate(game.date)}</Card.Footer>
         </Card>
@@ -145,16 +197,15 @@ function Game() {
     ));
   };
 
+
   return (
-    <div className="games">
+    <div className="gamesSetUp">
       <br></br>
-      <Container>
+      <Container style={{height: "100%"}}>
         <Row classname="justify-content-md-center">
-          <Col xs lg="12">
+          <Col xs lg="12" >
             <h1 style={{color: "white"}}>More Games</h1>
             <h4 style={{color: "white", fontSize: "18px"}}><i>Other games featured by emPower Through Play sponsors. Links will open a new window.</i></h4>
-            
-  
               {loggedIn === true && (
                 <>
                   <Button variant="primary" onClick={handleShow}>
@@ -173,7 +224,7 @@ function Game() {
                         <Form.Group as={Row}>
                           <Form.Label column sm="3">Title</Form.Label>
                           <Col sm="8">
-                            <Form.Control type="text" 
+                            <Form.Control type="text"
                             placeholder="Enter the title of the game here."
                             value={title}
                             onChange={handleTitleInput} />
@@ -183,7 +234,7 @@ function Game() {
                         <Form.Group as={Row}>
                           <Form.Label column sm="3">Description</Form.Label>
                           <Col sm="8">
-                            <Form.Control type="text" as="textarea" 
+                            <Form.Control type="text" as="textarea"
                             placeholder="Enter a brief description of the game here."
                             value={description}
                             onChange={handleDescriptionInput} />
@@ -193,7 +244,7 @@ function Game() {
                         <Form.Group as={Row}>
                           <Form.Label column sm="3">Link</Form.Label>
                           <Col sm="8">
-                            <Form.Control type="text" 
+                            <Form.Control type="text"
                             placeholder="Enter link to your game here. Please include 'https://'"
                             value={link}
                             onChange={handleLinkInput} />
@@ -203,7 +254,7 @@ function Game() {
                         <Form.Group as={Row}>
                           <Form.Label column sm="3">Type of Game</Form.Label>
                           <Col sm="8">
-                            <Form.Control type="text" 
+                            <Form.Control type="text"
                             placeholder="Enter the genre of the game here."
                             value={genre}
                             onChange={handleGenreInput} />
@@ -222,16 +273,18 @@ function Game() {
                 </>
               )}
               <br></br>
-            
+
 
           </Col>
         </Row>
+        <Container>
+          <Row style={{paddingBottom:'5rem'}}>
+            {displayGameCards(games)}
+          </Row>
+        </Container>
       </Container>
 
-            <Container>
-            <Row>
-            {displayGameCards(games)}
-            </Row></Container>
+
     </div>
   )
 }

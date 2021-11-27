@@ -68,7 +68,7 @@ function Home() {
     </Carousel> */}
         <div
         style={{
-            backgroundImage: "url(/labyrinth.webp)",
+            backgroundImage: "url(/AnaliliaMenu.webp)",
             backgroundSize: "cover",
             height:"100vh",
         }}>

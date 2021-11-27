@@ -8,7 +8,8 @@ import { useHistory} from 'react-router-dom';
 import Card from 'react-bootstrap/Card';
 //import Modal from 'react-bootstrap/Modal';
 import Popup from '../../Popup.js';
-import '../.././styles/Register.css';
+import '../.././styles/Login.css';
+
 
 function Register() {
 
@@ -65,14 +66,15 @@ function Register() {
   }
 
   return (
-    <div className="Register">
+    <div className="loginSetUp">
+    <br></br>
     <Container>
       {/*<Form onSubmit={register}>*/}
       <Card
       style={{
         alignItems: "center",
         margin: "0 auto",
-        marginTop: "15%",
+        marginTop: "3%",
         width: "500pt",
         height: "350pt"}}>
         <Card.Title

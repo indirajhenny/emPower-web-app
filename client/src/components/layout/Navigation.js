@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import { useHistory} from 'react-router-dom';
 
 import { NavLink } from 'react-router-dom';
 
@@ -10,6 +11,7 @@ import Form from 'react-bootstrap/Form';
 import FormControl from 'react-bootstrap/FormControl';
 import InputGroup from 'react-bootstrap/InputGroup';
 import AuthContext from '../context/AuthContext';
+import axios from 'axios';
 
 //import './Navigation.css';
 
@@ -19,6 +21,19 @@ const Navigation = () => {
     const {loggedIn} = useContext(AuthContext);
     console.log(loggedIn);
     // with loggedIn we can now use conditional rendering
+
+    // send cookie back to server to detect new updated state
+    const {getLoggedIn} = useContext(AuthContext);
+
+    // gives array with all the paths we have visited in the past
+    const history = useHistory();
+
+    async function logOut() {
+      // run request to delete the cookie
+      await axios.get("http://localhost:8080/auth/logout");
+      await getLoggedIn();
+      history.push("/");
+    }
 
     return (
 
@@ -31,6 +46,7 @@ const Navigation = () => {
          <Navbar.Collapse style={{float: "right"}} className="justify-content-end">
          <Nav className="mr-auto">
             <Nav.Link href="/Games">More Games</Nav.Link>
+            <Nav.Link href="/About">About Us</Nav.Link>
             {/*<Nav.Link href="/Resources">Resources</Nav.Link>*/}
             {/*<Nav.Link href="/Forum">Forum</Nav.Link>*/}
             <NavDropdown drop='up' title="Account" id="basic-nav-dropdown">
@@ -42,7 +58,7 @@ const Navigation = () => {
                )}
                {loggedIn === true && (
                  <>
-                   <NavDropdown.Item href="/Profile">Profile</NavDropdown.Item>
+                   <NavDropdown.Item onClick={logOut}> Logout</NavDropdown.Item>
                  </>
                )}
             </NavDropdown>

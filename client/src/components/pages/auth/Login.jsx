@@ -10,6 +10,7 @@ import Popup from '../../Popup.js';
 
 import '../.././styles/Login.css';
 
+
 import axios from 'axios';
 //import FormControl from 'react-bootstrap/FormControl';
 
@@ -63,56 +64,58 @@ function Login() {
     }
   }
   return (
-    <div className="Login">
-    <Container>
-      <Card
-      style={{
-        alignItems: "center",
-        margin: "0 auto",
-        marginTop: "15%",
-        width: "425pt",
-        height: "275pt"}}>
-          <Card.Title
-          style={{
-              color: "#682D43",
-              textAlign: "center",
-              fontSize: "xx-large",
-              paddingTop: "10pt"}}><h8>Login</h8></Card.Title>
-      <Form onSubmit={login}>
-        <Form.Group controlId="formBasicEmail">
-          <Form.Label>Email address</Form.Label>
-          <Form.Control
-            type="email"
-            placeholder="Enter email"
-            onChange={(e) => setEmail(e.target.value)}
-            value={email}
-          />
-          <Form.Text className="text-muted">
-            We'll never share your email with anyone else.
-          </Form.Text>
-        </Form.Group>
+    <div className="loginSetUp">
+    <br></br>
+      <Container>
+        <Card
+        style={{
+          alignItems: "center",
+          margin: "0 auto",
+          marginTop: "10%",
+          width: "425pt",
+          height: "275pt"}}>
+            <Card.Title
+            style={{
+                color: "#682D43",
+                textAlign: "center",
+                fontSize: "xx-large",
+                paddingTop: "10pt"}}><h8>Login</h8></Card.Title>
+        <Form onSubmit={login}>
+          <Form.Group controlId="formBasicEmail">
+            <Form.Label>Email address</Form.Label>
+            <Form.Control
+              type="email"
+              placeholder="Enter email"
+              onChange={(e) => setEmail(e.target.value)}
+              value={email}
+            />
+            <Form.Text className="text-muted">
+              We'll never share your email with anyone else.
+            </Form.Text>
+          </Form.Group>
 
-        <Form.Group controlId="formBasicPassword">
-          <Form.Label>Password</Form.Label>
-          <Form.Control
-            type="password"
-            placeholder="Password"
-            onChange={(e) => setPassword(e.target.value)}
-            value={password}
-          />
-        </Form.Group>
+          <Form.Group controlId="formBasicPassword">
+            <Form.Label>Password</Form.Label>
+            <Form.Control
+              type="password"
+              placeholder="Password"
+              onChange={(e) => setPassword(e.target.value)}
+              value={password}
+            />
+          </Form.Group>
 
-        <Button variant="secondary" type="submit">
-          Log In
-        </Button>
-        </Form>
-        </Card>
-    </Container>
-    {/*UPDATED POP-UP*/}
-    <Popup trigger={buttonPopup} setTrigger={setButtonPopup}>
-      <b>{registerError}</b>
-    </Popup>
+          <Button variant="secondary" type="submit">
+            Log In
+          </Button>
+          </Form>
+          </Card>
+      </Container>
+      {/*UPDATED POP-UP*/}
+      <Popup trigger={buttonPopup} setTrigger={setButtonPopup}>
+        <b>{registerError}</b>
+      </Popup>
     </div>
+
   )
 }
 export default Login;

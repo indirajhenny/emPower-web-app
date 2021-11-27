@@ -15,7 +15,10 @@ import Navigation from './components/layout/Navigation';
 import Forum from './components/pages/Forum';
 import Register from './components/pages/auth/Register';
 import Profile from './components/pages/Profile';
+//import About from './components/pages/About';
+import About from './components/pages/About';
 import AuthContext from "./components/context/AuthContext";
+import Verified from './components/pages/auth/Verified';
 
 function Router() {
     const {loggedIn} = useContext(AuthContext);
@@ -29,6 +32,8 @@ function Router() {
            <Switch>
             <Route path="/" component={Home} exact/>
             <Route path="/Games" component={Games}/>
+            <Route path="/About" component={About}/>
+            <Route path="/Verified" component={Verified}/>
             {/*<Route path="/Resources" component={Resources}/>*/}
             <Route path="/Forum" component={Forum}/>
             {/*<Route path="/Register" component={Register}/>*/}
