@@ -274,7 +274,7 @@ router.get("/verify/:userId/:uniqueString", (req, res) => {
                       .then(() => {
                         // UPDATE to heroku PORT later
                         //res.redirect('http://localhost:3000/Verified');
-                        res.redirect('http://empowerthroughplay/Verified');
+                        res.redirect('http://empowerthroughplay.herokuapp.com/Verified');
                         console.log("EMAIL HAS BEEN VERIFIED!!");
                         //User
                           //.find({userId})
