@@ -39,8 +39,6 @@ mongoose.connection.on('connected', () => {
   console.log('Mongoose is connected!!');
 });
 
-//app.use('/', express.static(path.join(__dirname, '/client/build')));
-
 // parses every json or url data coming in; makes all
 // requests coming in available to requests called in routes
 // populates req.body in endpoints
@@ -66,16 +64,11 @@ app.use(cors({
 
 // instead of '/', we could use '/api' if we decide
 // set up routes
-// change this to "./routes/forumRouter"
 //app.use('/forumQA', require('./routes/forumRouter'));
 app.use('/auth', require('./routes/userRouter'));
 //app.use('/researcher', require('./routes/researcherRouter'));
 //app.use('/resourceInfo', require('./routes/resourceRouter'));
 app.use('/gameInfo', require('./routes/gameRouter'));
-
-/*app.get('*', (req,res) =>{
-    res.sendFile(path.join(__dirname+'/client/public', 'index.html'));
-});*/
 
 // STEP 3: Create Custom variable inside heroku to confirm
 // app is on heroku
