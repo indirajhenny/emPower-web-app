@@ -20,7 +20,6 @@ node_modules
 # testing
 /coverage
 
-
 # misc
 .DS_Store
 .env.local
