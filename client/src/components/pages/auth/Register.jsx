@@ -5,8 +5,11 @@ import Container from 'react-bootstrap/Container';
 import axios from 'axios';
 import AuthContext from '../../context/AuthContext';
 import { useHistory} from 'react-router-dom';
+import Card from 'react-bootstrap/Card';
 //import Modal from 'react-bootstrap/Modal';
 import Popup from '../../Popup.js';
+import '../.././styles/Login.css';
+
 
 function Register() {
 
@@ -19,7 +22,7 @@ function Register() {
   const history = useHistory();
 
   const [buttonPopup, setButtonPopup] = useState(false);
-  let registerError = "";
+  const [registerError, setRegisterError] = useState("");
   let loginSuccess = false;
 
   async function register(e) {
@@ -36,7 +39,7 @@ function Register() {
       // makes http request call
       // make a POST request to send data to server
       // replace local host with future heroku host URL
-      await axios.post("http://localhost:8080/auth/", registerData)
+      await axios.post("/auth/", registerData)
         .then(res =>
           {
             console.log(res.data);
@@ -44,24 +47,46 @@ function Register() {
           })
         .catch(err =>
           {
-            console.log(err.response.data.errorMessage);
-            registerError = err.response.data.errorMessage;
+            console.log(err.response.data.message);
+            //registerError = err.response.data.errorMessage;
+            setRegisterError(err.response.data.message);
+            //console.log(err.response.data);
+            //registerError = err.response.data;
             setButtonPopup(true);
           });
+      /*
       if (loginSuccess === true)
       {
         await getLoggedIn();
         history.push("/");
-      }
+      }*/
     } catch(err) {
       console.error(err);
     }
   }
 
   return (
-    <div className="Register">
+    <div className="loginSetUp">
+    <br></br>
     <Container>
       {/*<Form onSubmit={register}>*/}
+      <Card
+      style={{
+        alignItems: "center",
+        margin: "0 auto",
+        marginTop: "3%",
+        width: "500pt",
+        height: "350pt"}}>
+        <Card.Title
+        style={{
+          color: "#682D43",
+          textAlign: "center",
+          fontSize: "xx-large",
+          paddingTop: "10pt"}}><h8>
+          Register</h8></Card.Title>
+        <Card.Text style={{textAlign: "center"}}>You must be an emPower Through Play sponsor to create an account.
+          <br></br>
+          You do <b>not</b> need an account to play <i>Analilia</i>.</Card.Text>
       <Form >
         <Form.Group controlId="formBasicEmail">
           <Form.Label>Email address</Form.Label>
@@ -96,15 +121,16 @@ function Register() {
           />
         </Form.Group>
         {/*<Button variant="primary" type="submit"*/}
-        <Button variant="primary" onClick={register}>
+        <Button variant="secondary" onClick={register}>
           Submit
         </Button>
         </Form>
+        </Card>
         {/*get variable that sets trigger variable to true
           aka set a conditional trigger*/}
     </Container>
     <Popup trigger={buttonPopup} setTrigger={setButtonPopup}>
-      <h3>Error Registering</h3>
+      <b>{registerError}</b>
     </Popup>
 
     </div>

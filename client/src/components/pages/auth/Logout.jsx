@@ -14,7 +14,7 @@ function Logout() {
 
   async function logOut() {
     // run request to delete the cookie
-    await axios.get("http://localhost:8080/auth/logout");
+    await axios.get("/auth/logout");
     await getLoggedIn();
     history.push("/");
   }

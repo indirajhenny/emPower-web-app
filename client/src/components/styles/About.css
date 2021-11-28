@@ -1,0 +1,147 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+.body {
+  display: flex;
+  height: 40vh;
+  align-items: center;
+  justify-content: center;
+}
+
+.heroContainer {
+  height: 60vh;
+  width: 100%;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: center;
+  box-shadow: inset 0 0 0 1000px rgba(0, 0, 0, 0.2);
+  object-fit: contain;
+}
+.missionContainer {
+  height: 100%;
+  width: 100%;
+  color: black;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: start;
+  align-items: center;
+  box-shadow: inset 0 0 0 1000px rgba(0, 0, 0, 0.2);
+  object-fit: contain;
+  background-color: #34495E;
+}
+.teamContainer {
+  background-color: #34495E; /*#101233*/
+  height: 100%;
+  width: 100%;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: start;
+  box-shadow: inset 0 0 0 1000px rgba(0, 0, 0, 0.2);
+  object-fit: contain;
+  padding-bottom: 5rem;
+}
+
+.sponsorsContainer {
+  background-color: #101233;
+  /*background-color: #ffffff00;*/
+  height: 100%;
+  width: 100%;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: start;
+  /*box-shadow: inset 0 0 0 1000px rgba(0, 0, 0, 0.2);*/
+  object-fit: contain;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.sponsorsList{
+  /*background-color: #ffffff00;*/
+  height: 100%;
+  width: 100%;
+  color: white;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  /*box-shadow: inset 0 0 0 1000px rgba(0, 0, 0, 0.2);*/
+  object-fit: contain;
+  padding: 1rem;
+}
+
+.seniorDesignContainer {
+  /*background-color: #101233;*/
+  /*background-color: #ffffff00;*/
+  height: 100%;
+  width: 100%;
+  color: white;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  justify-content: start;
+  align-items: start;
+  /*box-shadow: inset 0 0 0 1000px rgba(0, 0, 0, 0.2);*/
+  object-fit: contain;
+  margin-bottom: .5rem;
+}
+
+@media screen and (max-width: 960px) {
+  .hero-container > h1 {
+    font-size: 70px;
+    margin-top: -150px;
+  }
+
+}
+
+
+
+
+
+.column {
+  float: left;
+  width: 50%;
+  margin-bottom: 16px;
+  /*padding: 0 8px;*/
+  padding: 20px;
+  color: white;
+}
+
+
+.about-section {
+  display: flex;
+  height: 90vh;
+  align-items: center;
+  justify-content: center;
+  font-size: 3rem;
+}
+.about-hero-section {
+  padding: 50px;
+  text-align: center;
+  background-color: #474e5d;
+  color: white;
+}
+.about {
+  display: flex;
+  height: 90vh;
+  align-items: center;
+  justify-content: center;
+  font-size: 3rem;
+}
+
+/*img {
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  z-index: -1;
+}*/

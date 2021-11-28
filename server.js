@@ -55,26 +55,31 @@ app.use(cookieParser());
 app.use(cors({
   // array of accepted front-end origins that are accepted
   // ** TODO: when app is deployed, replace with name of deployed app
-  origin: ["http://localhost:3000"],
+  //origin: ["http://localhost:3000"],
+  origin: ["https://empowerthroughplay.herokuapp.com"],
+  //origin: ["http://localhost:5000"],
   // allows axios to set credentials
   credentials: true // allow browser to set the cookie w/ account info
 }));
 
 // instead of '/', we could use '/api' if we decide
 // set up routes
-// change this to "./routes/forumRouter"
-app.use('/forumQA', require('./routes/forumRouter'));
+//app.use('/forumQA', require('./routes/forumRouter'));
 app.use('/auth', require('./routes/userRouter'));
-app.use('/researcher', require('./routes/researcherRouter'));
-app.use('/resourceInfo', require('./routes/resourceRouter'));
+//app.use('/researcher', require('./routes/researcherRouter'));
+//app.use('/resourceInfo', require('./routes/resourceRouter'));
 app.use('/gameInfo', require('./routes/gameRouter'));
 
 // STEP 3: Create Custom variable inside heroku to confirm
 // app is on heroku
 if (process.env.NODE_ENV == 'production') {
+  console.log('production build!!');
   // put client aka react application production build
   // into our server
   app.use(express.static('client/build'));
+  app.get('*', (req,res) =>{
+      res.sendFile(path.join(__dirname,'client', 'build', 'index.html'));
+  });
 
 }
 
