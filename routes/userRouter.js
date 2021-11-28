@@ -152,6 +152,7 @@ const sendVerificationEmail = ({_id, email}, res) => {
   // UPDATE: change this to heroku PORT later
   //const currentUrl = "http://localhost:8080/";
   const currentUrl = process.env.PORT;
+  console.log("PORT in userRouter" + process.env.PORT);
   const uniqueString = uuidv4() + _id;
 
   const mailOptions = {

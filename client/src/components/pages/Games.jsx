@@ -20,7 +20,7 @@ function testDate(d) {
   return d;
 }
 
-function Game() {
+function Games() {
 
   // set state that contains value of form inputs
   const [title, setTitle] = useState('');
@@ -288,4 +288,4 @@ function Game() {
     </div>
   )
 }
-export default Game;
+export default Games;
